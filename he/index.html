@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>טופס אפיון טיול - My Daily Journeys</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="טופס אפיון לטיול אישי עבור ייעוץ ותכנון טיול עם My Daily Journeys.">
+
+  <!-- Google Font: Varela Round -->
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Varela Round', sans-serif;
+      background-color: #fff3cd;
+      color: #333;
+      line-height: 1.6;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%);
+      border-radius: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(236, 112, 11, 0.1);
+    }
+
+    h1 {
+      font-size: 2.4em;
+      color: #EC700B;
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+
+    .subheadline {
+      font-size: 1em;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto 10px;
+    }
+
+    .small-note {
+      font-size: 0.85em;
+      color: #777;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.6em;
+      }
+      .hero {
+        padding: 30px 15px;
+      }
+    }
+
+    .intake-form {
+      margin-top: 30px;
+      margin-bottom: 40px;
+    }
+
+    .form-section {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .form-section h2 {
+      color: #EC700B;
+      font-size: 1.4em;
+      margin-bottom: 6px;
+    }
+
+    .section-subtitle {
+      font-size: 0.9em;
+      color: #777;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.95em;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .required {
+      color: #EC700B;
+      margin-right: 3px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-family: 'Varela Round', sans-serif;
+      font-size: 0.95em;
+      background: #ffffff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      direction: rtl;
+      text-align: right;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="number"]:focus,
+    input[type="date"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #EC700B;
+      box-shadow: 0 0 0 2px rgba(236, 112, 11, 0.15);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input[readonly] {
+      background-color: #f9f9f9;
+      color: #666;
+    }
+
+    .ltr-input {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .helper-text {
+      font-size: 0.8em;
+      color: #777;
+      margin-top: 4px;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .radio-group label,
+    .checkbox-group label {
+      font-weight: 400;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 0.93em;
+    }
+
+    .radio-group input,
+    .checkbox-group input {
+      margin-top: 2px;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .form-row .half {
+      flex: 1 1 220px;
+    }
+
+    .form-row .third {
+      flex: 1 1 150px;
+    }
+
+    .pill-note {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #fff3cd;
+      color: #555;
+      font-size: 0.8em;
+      margin-bottom: 10px;
+    }
+
+    .field-error {
+      display: none;
+      font-size: 0.8em;
+      color: #c0392b;
+      margin-top: 4px;
+    }
+
+    .alert {
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 0.9em;
+      display: none;
+    }
+
+    .alert.error {
+      background: #ffe6e2;
+      color: #c0392b;
+      border: 1px solid #f5b7b1;
+    }
+
+    .alert.success {
+      background: #e8f8f5;
+      color: #1e8449;
+      border: 1px solid #abebc6;
+    }
+
+    .form-message {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      display: none;
+      text-align: center;
+    }
+
+    .form-message.success {
+      background: #e8f8f5;
+      color: #1e8449;
+      border: 1px solid #abebc6;
+      display: block;
+    }
+
+    .form-message.error {
+      background: #ffe6e2;
+      color: #c0392b;
+      border: 1px solid #f5b7b1;
+      display: block;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #EC700B;
+      color: white;
+      padding: 16px 32px;
+      font-size: 1.05em;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(236, 112, 11, 0.3);
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      background-color: #d46209;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(236, 112, 11, 0.4);
+    }
+
+    .submit-row {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .submit-row .helper-text {
+      margin-top: 8px;
+    }
+
+    .next-steps-box {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%);
+      padding: 24px 22px;
+      border-radius: 20px;
+      margin-top: 26px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(236, 112, 11, 0.12);
+    }
+
+    .next-steps-box h3 {
+      color: #EC700B;
+      font-size: 1.3em;
+      margin-bottom: 10px;
+    }
+
+    .next-steps-box p {
+      font-size: 0.95em;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .email-link {
+      color: #EC700B;
+      text-decoration: none;
+    }
+
+    .email-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 10px 10px;
+      font-size: 0.8em;
+      color: #888;
+    }
+
+    /* שורות דירוג תקציב */
+    .priority-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+
+    .priority-row:first-of-type {
+      margin-top: 14px;
+    }
+
+    .priority-label {
+      flex: 0 0 220px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .priority-options {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 6px;
+      direction: ltr; /* כדי שהמספרים יהיו 1 עד 5 משמאל לימין */
+    }
+
+    .priority-choice {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85em;
+    }
+
+    .priority-choice input[type="radio"] {
+      display: none;
+    }
+
+    .priority-choice span {
+      display: inline-block;
+      min-width: 28px;
+      padding: 5px 0;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      text-align: center;
+      background-color: #ffffff;
+      color: #555;
+      transition: all 0.15s ease;
+    }
+
+    .priority-choice input[type="radio"]:checked + span {
+      background-color: #EC700B;
+      color: #ffffff;
+      border-color: #EC700B;
+      box-shadow: 0 0 0 2px rgba(236, 112, 11, 0.18);
+    }
+
+    @media (max-width: 480px) {
+      .form-section {
+        padding: 18px 16px;
+      }
+      .form-row {
+        flex-direction: column;
+      }
+      .priority-label {
+        flex: 1 1 100%;
+      }
+      .priority-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .priority-options {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>טופס אפיון טיול</h1>
+      <p class="subheadline">
+        הטופס הזה יעזור לנו להבין מי אתם, לאן אתם חולמים להגיע ומה אתם צריכים מהליווי האישי.
+      </p>
+      <p class="small-note">שדות שמסומנים ב<span class="required">*</span> הם שדות חובה.</p>
+    </header>
+
+    <form id="intake-form" class="intake-form" method="post" action="#">
+
+      <div id="form-error-summary" class="alert error">
+        יש כמה שדות חובה שחסרים או לא הוזנו נכון. גללו למעלה וסמנו את התשובות החסרות.
+      </div>
+      <div id="form-success" class="alert success">
+        תודה שמילאתם את הטופס. כרגע הנתונים נשמרים רק בדף הזה. תוכלו לחבר את הטופס למערכת או לאוטומציה משלכם ולשלוח אותם אליכם.
+      </div>
+
+      <!-- חלק 1: פרטים בסיסיים -->
+      <section class="form-section" id="part-1">
+        <h2>חלק 1: פרטים בסיסיים</h2>
+        <p class="section-subtitle">פרטי קשר והבנה ראשונית של סוג השירות.</p>
+
+        <div class="form-group">
+          <label for="name">שם מלא<span class="required">*</span></label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">כתובת מייל<span class="required">*</span></label>
+          <input type="email" id="email" name="email" class="ltr-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">טלפון (רצוי וואטסאפ)</label>
+          <input type="tel" id="phone" name="phone" class="ltr-input">
+          <p class="helper-text">אשתמש במספר הזה רק לתקשורת לגבי הטיול.</p>
+        </div>
+
+        <div class="form-group">
+          <label>איזה שירות מעניין אתכם?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="service_type" value="itinerary_review" required>
+              ליווי ובדיקת מסלול קיים (כבר בנינו מסלול ורוצים ליטוש)
+            </label>
+            <label>
+              <input type="radio" name="service_type" value="full_custom">
+              תכנון טיול מלא מההתחלה
+            </label>
+            <label>
+              <input type="radio" name="service_type" value="not_sure">
+              עוד לא בטוחים - צריכים עזרה להבין מה מתאים לנו
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- חלק 2: הטיול -->
+      <section class="form-section" id="part-2">
+        <h2>חלק 2: הטיול</h2>
+        <p class="section-subtitle">פרטים טכניים בסיסיים על היעד והתאריכים.</p>
+
+        <div class="form-group">
+          <label for="destination">לאן אתם מתכננים לנסוע?<span class="required">*</span></label>
+          <input type="text" id="destination" name="destination" required placeholder='לדוגמה: "מקסיקו - פלאיה דל כרמן, טולום ואיסלה מוחרס"'>
+        </div>
+
+        <div class="form-group">
+          <label>תאריכים<span class="required">*</span></label>
+          <div class="form-row">
+            <div class="half">
+              <label for="departure-date" style="font-weight:400; font-size:0.9em;">תאריך יציאה<span class="required">*</span></label>
+              <input type="date" id="departure-date" name="departure_date" required class="ltr-input">
+            </div>
+            <div class="half">
+              <label for="return-date" style="font-weight:400; font-size:0.9em;">תאריך חזרה<span class="required">*</span></label>
+              <input type="date" id="return-date" name="return_date" required class="ltr-input">
+            </div>
+          </div>
+          <div class="radio-group" style="margin-top:10px;">
+            <label>
+              <input type="radio" name="date_flexibility" value="flexible" checked>
+                התאריכים גמישים
+            </label>
+            <label>
+              <input type="radio" name="date_flexibility" value="fixed">
+              התאריכים קבועים
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="trip-length">אורך הטיול</label>
+          <input type="text" id="trip-length" name="trip_length" readonly placeholder="יחושב אוטומטית לפי תאריכי היציאה והחזרה">
+          <p class="helper-text">מספר הימים יחושב אחרי שתבחרו תאריכים.</p>
+        </div>
+
+        <div class="form-group">
+          <label>מי יוצאים לטיול?</label>
+          <div class="form-row">
+            <div class="third">
+              <label for="adults" style="font-weight:400; font-size:0.9em;">מבוגרים</label>
+              <input type="number" id="adults" name="adults" min="0" value="2">
+            </div>
+            <div class="third">
+              <label for="children" style="font-weight:400; font-size:0.9em;">ילדים</label>
+              <input type="number" id="children" name="children" min="0" value="0">
+            </div>
+            <div class="third">
+              <label for="infants" style="font-weight:400; font-size:0.9em;">תינוקות</label>
+              <input type="number" id="infants" name="infants" min="0" value="0">
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:10px; margin-bottom:0;">
+            <label for="children-ages" style="font-weight:400; font-size:0.9em;">גילאי הילדים (אם רלוונטי)</label>
+            <input type="text" id="children-ages" name="children_ages" placeholder="לדוגמה: 4 ו 9">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>האם הטיול לציון אירוע מיוחד?</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="special_occasion" value="no" checked>
+              לא, טיול רגיל
+            </label>
+            <label>
+              <input type="radio" name="special_occasion" value="yes">
+              כן
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="special-occasion-details-group" style="display:none;">
+          <label for="special-occasion-details">איזה אירוע? (ירח דבש, יום הולדת, שנה לחיים על הכביש וכן הלאה)</label>
+          <input type="text" id="special-occasion-details" name="special_occasion_details">
+        </div>
+      </section>
+
+      <!-- חלק 3: תקציב והעדפות -->
+      <section class="form-section" id="part-3">
+        <h2>חלק 3: תקציב והעדפות</h2>
+        <p class="section-subtitle">הבנה של המסגרת הכלכלית ומה חשוב לכם יותר ופחות.</p>
+
+        <div class="form-group">
+          <label>מה בערך התקציב הכולל לאדם אחד בטיול (כולל טיסות, לינה, אוכל ואטרקציות)?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="budget" value="under_1000" required> עד 1,000 דולר לאדם</label>
+            <label><input type="radio" name="budget" value="1000_2500"> 1,000 - 2,500 דולר לאדם</label>
+            <label><input type="radio" name="budget" value="2500_5000"> 2,500 - 5,000 דולר לאדם</label>
+            <label><input type="radio" name="budget" value="5000_10000"> 5,000 - 10,000 דולר לאדם</label>
+            <label><input type="radio" name="budget" value="10000_plus"> 10,000 דולר ומעלה לאדם</label>
+            <label><input type="radio" name="budget" value="no_idea"> אין לנו מושג עדיין</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>איך הייתם מדרגים את סדר העדיפויות בתקציב?<span class="required">*</span></label>
+          <p class="helper-text">בחרו מספר אחד בכל שורה: 1 הכי חשוב, 5 הכי פחות חשוב.</p>
+
+          <!-- לינה -->
+          <div class="priority-row">
+            <div class="priority-label">איכות הלינה<span class="required">*</span></div>
+            <div class="priority-options">
+              <label class="priority-choice">
+                <input type="radio" name="rank_accommodation" value="1" required>
+                <span>1</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_accommodation" value="2">
+                <span>2</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_accommodation" value="3">
+                <span>3</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_accommodation" value="4">
+                <span>4</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_accommodation" value="5">
+                <span>5</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- אוכל -->
+          <div class="priority-row">
+            <div class="priority-label">אוכל וחוויות קולינריות<span class="required">*</span></div>
+            <div class="priority-options">
+              <label class="priority-choice">
+                <input type="radio" name="rank_food" value="1" required>
+                <span>1</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_food" value="2">
+                <span>2</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_food" value="3">
+                <span>3</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_food" value="4">
+                <span>4</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_food" value="5">
+                <span>5</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- אטרקציות -->
+          <div class="priority-row">
+            <div class="priority-label">אטרקציות וסיורים<span class="required">*</span></div>
+            <div class="priority-options">
+              <label class="priority-choice">
+                <input type="radio" name="rank_activities" value="1" required>
+                <span>1</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_activities" value="2">
+                <span>2</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_activities" value="3">
+                <span>3</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_activities" value="4">
+                <span>4</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_activities" value="5">
+                <span>5</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- טיסות ותחבורה -->
+          <div class="priority-row">
+            <div class="priority-label">טיסות ותחבורה<span class="required">*</span></div>
+            <div class="priority-options">
+              <label class="priority-choice">
+                <input type="radio" name="rank_flights" value="1" required>
+                <span>1</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_flights" value="2">
+                <span>2</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_flights" value="3">
+                <span>3</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_flights" value="4">
+                <span>4</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_flights" value="5">
+                <span>5</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- גמישות -->
+          <div class="priority-row">
+            <div class="priority-label">גמישות וספונטניות<span class="required">*</span></div>
+            <div class="priority-options">
+              <label class="priority-choice">
+                <input type="radio" name="rank_flexibility" value="1" required>
+                <span>1</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_flexibility" value="2">
+                <span>2</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_flexibility" value="3">
+                <span>3</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_flexibility" value="4">
+                <span>4</span>
+              </label>
+              <label class="priority-choice">
+                <input type="radio" name="rank_flexibility" value="5">
+                <span>5</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="splurge">על מה תהיו מוכנים להשקיע קצת extra בטיול הזה?</label>
+          <input type="text" id="splurge" name="splurge" placeholder='לדוגמה: "ארוחת שף מיוחדת", "סיור פרטי", "מלון על החוף"'>
+        </div>
+      </section>
+
+      <!-- חלק 4: סגנון טיול -->
+      <section class="form-section" id="part-4">
+        <h2>חלק 4: סגנון טיול</h2>
+        <p class="section-subtitle">מי אתם כמטיילים ומה עושה לכם טוב בדרך.</p>
+
+        <div class="form-group">
+          <label>איך הייתם מתארים את סגנון הטיול שלכם?<span class="required">*</span></label>
+          <p class="helper-text">אפשר לבחור כמה אפשרויות.</p>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="travel_style[]" value="adventure"> מחפשי ריגושים (אקשן, מים, התנסות בדברים חדשים)</label>
+            <label><input type="checkbox" name="travel_style[]" value="foodie"> פודיז (נוסעים בשביל האוכל)</label>
+            <label><input type="checkbox" name="travel_style[]" value="culture"> אוהבי תרבות (היסטוריה, מוזיאונים, סיפורים מקומיים)</label>
+            <label><input type="checkbox" name="travel_style[]" value="relaxation"> מצב חופשה מוחלט (חוף, ספא, מינימום תכנון)</label>
+            <label><input type="checkbox" name="travel_style[]" value="nightlife"> חיי לילה (ברים, מסיבות, מוזיקה חיה)</label>
+            <label><input type="checkbox" name="travel_style[]" value="off_beaten"> טיול קצת מחוץ למסלול (פחות תיירים, יותר מקומי)</label>
+            <label><input type="checkbox" name="travel_style[]" value="planner"> מתכננים (אוהבים לדעת מה עושים כל יום)</label>
+            <label><input type="checkbox" name="travel_style[]" value="flow"> זורמים (מעדיפים גמישות ותכנון פתוח)</label>
+          </div>
+          <p class="field-error" id="travel-style-error">בחרו לפחות אפשרות אחת שמתארת אתכם.</p>
+        </div>
+
+        <div class="form-group">
+          <label>מה הקצב היומי המועדף עליכם?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="daily_pace" value="slow" required> קצב איטי (1-2 דברים ביום והרבה זמן לעצמכם)</label>
+            <label><input type="radio" name="daily_pace" value="medium"> קצב בינוני (2-3 דברים ביום, איזון טוב)</label>
+            <label><input type="radio" name="daily_pace" value="fast"> קצב מהיר (לדחוף הכל פנימה, נ休 על הספה בבית)</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>איזו לינה בדרך כלל מתאימה לכם יותר?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="accommodation" value="hotel" required> מלונות/ריזורטים (נוחות ופינוקים)</label>
+            <label><input type="radio" name="accommodation" value="boutique"> מלונות בוטיק (קטנים, מיוחדים ומעוצבים)</label>
+            <label><input type="radio" name="accommodation" value="hostel"> הוסטלים (אווירה חברתית ותקציב נמוך)</label>
+            <label><input type="radio" name="accommodation" value="rental"> Airbnb/דירות נופש (בית קטן רחוק מהבית)</label>
+            <label><input type="radio" name="accommodation" value="flexible"> אנחנו גמישים - תמליצי על מה שמתאים לטיול</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>מה הפילוסופיה שלכם לגבי אוכל בטיול?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="food_style" value="street_local" required> אוכל רחוב ומקומות מקומיים (אותנטי וזול)</label>
+            <label><input type="radio" name="food_style" value="mix"> שילוב של מקומי + מסעדות טובות</label>
+            <label><input type="radio" name="food_style" value="fine_dining"> מסעדות שף וחוויות קולינריות מיוחדות</label>
+            <label><input type="radio" name="food_style" value="not_picky"> לא בררנים, רק שיהיה מה לאכול</label>
+            <label><input type="radio" name="food_style" value="dietary"> צרכים תזונתיים ספציפיים (תכתבו מיד אחרי זה)</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dietary">האם יש הגבלות תזונתיות, רגישויות או העדפות שכדאי להכיר?</label>
+          <textarea id="dietary" name="dietary" placeholder="טבעוני, ללא גלוטן, כשרות, אלרגיות, רגישות לחריף, וכו'."></textarea>
+        </div>
+      </section>
+
+      <!-- חלק 5: ניסיון טיול -->
+      <section class="form-section" id="part-5">
+        <h2>חלק 5: ניסיון טיול</h2>
+        <p class="section-subtitle">קצת הקשר על הניסיון שלכם והציפיות מהטיול.</p>
+
+        <div class="form-group">
+          <label>כמה ניסיון יש לכם בטיולים לחו"ל?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="travel_experience" value="first_time" required> טיול ראשון לחו"ל או כמעט ראשון</label>
+            <label><input type="radio" name="travel_experience" value="some"> קצת ניסיון (היינו בכמה מדינות)</label>
+            <label><input type="radio" name="travel_experience" value="experienced"> מנוסים (נסענו לא מעט לאורך השנים)</label>
+            <label><input type="radio" name="travel_experience" value="nomad"> נוודים דיגיטליים/מטיילים בתדירות גבוהה</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>האם כבר הייתם ביעד הזה?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="been_destination" value="yes" required> כן</label>
+            <label><input type="radio" name="been_destination" value="no"> לא, פעם ראשונה</label>
+          </div>
+        </div>
+
+        <div class="form-group" id="been-destination-details-group" style="display:none;">
+          <label for="been-destination-details">מתי הייתם שם? מה אהבתם ומה פחות?</label>
+          <textarea id="been-destination-details" name="been_destination_details" placeholder="מה עבד טוב, מה פחות, מה הייתם משנים הפעם."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="favorite-trip">ספרו לי על טיול או חופשה שהיו בשבילכם מושלמים במיוחד</label>
+          <textarea id="favorite-trip" name="favorite_trip" placeholder="מה עשה אותו לטיול מיוחד? זה עוזר לי להבין מה מדויק לכם."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="bad-trip">ועכשיו על טיול שלא הלך כמו שציפיתם</label>
+          <textarea id="bad-trip" name="bad_trip" placeholder="מה השתבש שם? זה יעזור לי לא לחזור על אותן טעויות."></textarea>
+        </div>
+      </section>
+
+      <!-- חלק 6: צרכים מיוחדים -->
+      <section class="form-section" id="part-6">
+        <h2>חלק 6: צרכים מיוחדים</h2>
+        <p class="section-subtitle">היבטי נגישות, בריאות ולוגיסטיקה שכדאי לקחת בחשבון.</p>
+
+        <div class="form-group">
+          <label>האם יש למישהו מהקבוצה צרכים מיוחדים?</label>
+          <p class="helper-text">אפשר לבחור כמה אפשרויות.</p>
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" class="needs-option" name="special_needs[]" value="mobility">
+              קשיי ניידות (כיסא גלגלים, קושי בהליכה וכו')
+            </label>
+            <label>
+              <input type="checkbox" class="needs-option" name="special_needs[]" value="medical">
+              מצבים רפואיים שחשוב שנכיר
+            </label>
+            <label>
+              <input type="checkbox" class="needs-option" name="special_needs[]" value="anxiety">
+              חרדה מטיסות או מנסיעות ארוכות
+            </label>
+            <label>
+              <input type="checkbox" id="needs-none" name="special_needs[]" value="none">
+              אין משהו מיוחד שכדאי לדעת
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="special-needs-details-group" style="display:none;">
+          <label for="special-needs-details">אם יש, ספרו קצת יותר</label>
+          <textarea id="special-needs-details" name="special_needs_details"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>האם יש לכם ביטוח נסיעות?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="travel_insurance" value="yes"> כן, כבר סגור</label>
+            <label><input type="radio" name="travel_insurance" value="plan_to_buy"> עדיין לא, אבל מתכננים לרכוש</label>
+            <label><input type="radio" name="travel_insurance" value="no_not_planning"> לא, ולא מתכננים לקחת</label>
+            <label><input type="radio" name="travel_insurance" value="what_is_it"> מה זה ביטוח נסיעות בכלל?</label>
+          </div>
+        </div>
+      </section>
+
+      <!-- חלק 7: החזון והחששות -->
+      <section class="form-section" id="part-7">
+        <h2>חלק 7: החזון והחששות</h2>
+        <p class="section-subtitle">מה יגרום לטיול להרגיש כמו הצלחה גדולה ומה פחות נותן לכם לישון בלילה.</p>
+
+        <div class="form-group">
+          <label for="trip-success">מה יגרום לטיול הזה להרגיש לכם כמו הצלחה ענקית?<span class="required">*</span></label>
+          <textarea id="trip-success" name="trip_success" required placeholder='לדוגמה: "אם נגלה מקומות מקומיים מעולים לאכול בהם ונרגיש שחווינו את המקום באמת ולא רק סימנו וי על אטרקציות".'></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>מה הכי מדאיג אתכם בטיול הזה?<span class="required">*</span></label>
+          <p class="helper-text">בחרו לפחות דבר אחד, גם אם הוא קטן.</p>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="trip_worries[]" value="safety"> נושא הבטיחות</label>
+            <label><input type="checkbox" name="trip_worries[]" value="lost_language"> ללכת לאיבוד או מחסום שפה</label>
+            <label><input type="checkbox" name="trip_worries[]" value="tourist_traps"> לבזבז זמן ואנרגיה על מלכודות תיירים</label>
+            <label><input type="checkbox" name="trip_worries[]" value="over_budget"> לחרוג מהתקציב</label>
+            <label><input type="checkbox" name="trip_worries[]" value="logistics"> הלוגיסטיקה (טיסות, קונקשנים, תזמונים)</label>
+            <label><input type="checkbox" name="trip_worries[]" value="missing_real"> לפספס את החוויה ה"אמיתית" של המקום</label>
+            <label>
+              <input type="checkbox" name="trip_worries[]" value="other">
+              משהו אחר
+            </label>
+          </div>
+          <p class="field-error" id="trip-worries-error">בחרו לפחות דאגה אחת שתרצו שניקח בחשבון.</p>
+          <div class="form-group" style="margin-top:10px;">
+            <label for="trip-worries-other" style="font-weight:400;">אם סימנתם "משהו אחר" - ספרו מה הוא</label>
+            <input type="text" id="trip-worries-other" name="trip_worries_other">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dont-want">האם יש משהו שאתם בטוח לא רוצים לעשות בטיול?</label>
+          <textarea id="dont-want" name="dont_want" placeholder='לדוגמה: "לא מוכנים לנסיעות אוטובוס של 12 שעות", "לא קמים לפני 9 בבוקר", "לא אוהבים אוכל חריף".'></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>איך הגעתם אליי?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="referral_source" value="google"> חיפוש בגוגל</label>
+            <label><input type="radio" name="referral_source" value="instagram"> אינסטגרם</label>
+            <label><input type="radio" name="referral_source" value="facebook"> פייסבוק</label>
+            <label>
+              <input type="radio" name="referral_source" value="blog">
+              פוסט בבלוג
+            </label>
+            <label><input type="radio" name="referral_source" value="friend"> המלצה של חברים/משפחה</label>
+            <label><input type="radio" name="referral_source" value="other"> משהו אחר</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="referral-details">אם בא לכם לפרט (שם של חבר, שם פוסט, קבוצה וכו')</label>
+          <input type="text" id="referral-details" name="referral_details">
+        </div>
+      </section>
+
+      <!-- חלק 8: ליווי מסלול קיים בלבד -->
+      <section class="form-section" id="itinerary-review-section" style="display:none;">
+        <h2>חלק 8: למסלול קיים בלבד</h2>
+        <p class="section-subtitle">רלוונטי רק אם כבר בניתם מסלול וסימנתם ליווי ובדיקת מסלול.</p>
+
+        <div class="form-group">
+          <span class="pill-note">אפשר להדביק כאן טקסט, לינק למסמך או להשתמש במערכת שלכם להעלאת קובץ.</span>
+          <label for="planned-itinerary">שתפו את המסלול שבניתם</label>
+          <textarea id="planned-itinerary" name="planned_itinerary" placeholder="הדביקו כאן את המסלול, או שתפו לינק למסמך/Google Doc."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>על מה תרצו שנתמקד בבדיקה?<span class="required">*</span></label>
+          <p class="helper-text">בחרו כל מה שרלוונטי.</p>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="itinerary_review_focus[]" value="timing"> בדיקת תזמונים ולוגיסטיקה (האם זה ריאלי ביום אחד?)</label>
+            <label><input type="checkbox" name="itinerary_review_focus[]" value="alternatives"> הצעת חלופות טובות יותר (האם אתם מפספסים משהו חשוב?)</label>
+            <label><input type="checkbox" name="itinerary_review_focus[]" value="tourist_traps"> סימון מלכודות תיירים ומקומות שכדאי לדלג עליהם</label>
+            <label><input type="checkbox" name="itinerary_review_focus[]" value="fill_gaps"> מילוי חורים במסלול (מה עוד אפשר להוסיף?)</label>
+            <label><input type="checkbox" name="itinerary_review_focus[]" value="budget_check"> התאמת המסלול לתקציב (איפה אפשר לחסוך?)</label>
+            <label><input type="checkbox" name="itinerary_review_focus[]" value="other"> משהו אחר</label>
+          </div>
+          <p class="field-error" id="itinerary-review-error">בחרו לפחות נושא אחד לבדיקה.</p>
+          <div class="form-group" style="margin-top:10px;">
+            <label for="itinerary-review-other" style="font-weight:400;">אם סימנתם "משהו אחר" - כתבו עליו כמה מילים</label>
+            <input type="text" id="itinerary-review-other" name="itinerary_review_other">
+          </div>
+        </div>
+      </section>
+
+      <!-- חלק 9: כל דבר נוסף -->
+      <section class="form-section" id="part-9">
+        <h2>חלק 9: כל דבר נוסף</h2>
+        <p class="section-subtitle">זה המקום לסיפורים קטנים, מחשבות, צרכים מיוחדים או שאלות.</p>
+
+        <div class="form-group">
+          <label for="anything-else">יש עוד משהו שכדאי שאדע עליכם ועל הטיול?</label>
+          <textarea id="anything-else" name="anything_else" placeholder="כל דבר שלא נכנס לשאלות הקודמות ועדיין מרגיש לכם חשוב."></textarea>
+        </div>
+      </section>
+
+      <!-- שליחה ומה קורה אחר כך -->
+      <div class="submit-row">
+        <button type="submit" class="cta-button" id="submitBtn">שליחת הטופס</button>
+        <div id="formMessage" class="form-message"></div>
+      </div>
+
+      <div class="next-steps-box">
+        <h3>מה קורה אחרי השליחה?</h3>
+        <p>✅ תקבלו אימייל אוטומטי שמאשר שקיבלתי את הפרטים.</p>
+        <p>📖 אני קוראת את התשובות שלכם בעיון, לא כמו צ'אט בוט.</p>
+        <p>💰 תוך 48 שעות אשלח לכם אימייל עם המחיר הסופי והצעדים הבאים.</p>
+        <p style="margin-top:10px;">
+          שאלות כבר עכשיו? אפשר לכתוב ל
+          <a class="email-link" href="mailto:hey@mydailyjourneys.com">hey@mydailyjourneys.com</a>
+        </p>
+      </div>
+    </form>
+
+    <footer>
+      © 2025 My Daily Journeys
+    </footer>
+  </div>
+
+
+  <script>
+    // Brevo Configuration
+    const BREVO_API_KEY = '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';
+    const BREVO_LIST_ID = 11; // Hebrew list
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mblnaqol';
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('intake-form');
+      const serviceRadios = document.querySelectorAll('input[name="service_type"]');
+      const itinerarySection = document.getElementById('itinerary-review-section');
+      const errorSummary = document.getElementById('form-error-summary');
+      const successBox = document.getElementById('form-success');
+      const submitBtn = document.getElementById('submitBtn');
+      const formMessage = document.getElementById('formMessage');
+
+      // Service type visibility toggle
+      function updateServiceVisibility() {
+        const selected = document.querySelector('input[name="service_type"]:checked');
+        if (selected && selected.value === 'itinerary_review') {
+          itinerarySection.style.display = 'block';
+        } else {
+          itinerarySection.style.display = 'none';
+        }
+      }
+
+      serviceRadios.forEach(function (radio) {
+        radio.addEventListener('change', updateServiceVisibility);
+      });
+      updateServiceVisibility();
+
+      // Trip length calculation
+      const departureInput = document.getElementById('departure-date');
+      const returnInput = document.getElementById('return-date');
+      const tripLengthInput = document.getElementById('trip-length');
+
+      function updateTripLength() {
+        if (!departureInput.value || !returnInput.value) {
+          tripLengthInput.value = '';
+          return;
+        }
+        const start = new Date(departureInput.value);
+        const end = new Date(returnInput.value);
+        if (isNaN(start.getTime()) || isNaN(end.getTime()) || end < start) {
+          tripLengthInput.value = '';
+          return;
+        }
+        const diffMs = end.getTime() - start.getTime();
+        const days = Math.round(diffMs / (1000 * 60 * 60 * 24)) + 1;
+        tripLengthInput.value = days + ' יום' + (days > 1 ? 'ים' : '');
+      }
+
+      departureInput.addEventListener('change', updateTripLength);
+      returnInput.addEventListener('change', updateTripLength);
+
+      // Special occasion visibility
+      const occasionRadios = document.querySelectorAll('input[name="special_occasion"]');
+      const occasionGroup = document.getElementById('special-occasion-details-group');
+      const occasionInput = document.getElementById('special-occasion-details');
+
+      function updateOccasionVisibility() {
+        const selected = document.querySelector('input[name="special_occasion"]:checked');
+        if (selected && selected.value === 'yes') {
+          occasionGroup.style.display = 'block';
+        } else {
+          occasionGroup.style.display = 'none';
+          if (occasionInput) occasionInput.value = '';
+        }
+      }
+
+      occasionRadios.forEach(function (radio) {
+        radio.addEventListener('change', updateOccasionVisibility);
+      });
+      updateOccasionVisibility();
+
+      // Been to destination visibility
+      const beenRadios = document.querySelectorAll('input[name="been_destination"]');
+      const beenGroup = document.getElementById('been-destination-details-group');
+      const beenInput = document.getElementById('been-destination-details');
+
+      function updateBeenVisibility() {
+        const selected = document.querySelector('input[name="been_destination"]:checked');
+        if (selected && selected.value === 'yes') {
+          beenGroup.style.display = 'block';
+        } else {
+          beenGroup.style.display = 'none';
+          if (beenInput) beenInput.value = '';
+        }
+      }
+
+      beenRadios.forEach(function (radio) {
+        radio.addEventListener('change', updateBeenVisibility);
+      });
+      updateBeenVisibility();
+
+      // Special needs visibility
+      const needsNone = document.getElementById('needs-none');
+      const needsOptions = document.querySelectorAll('.needs-option');
+      const needsGroup = document.getElementById('special-needs-details-group');
+      const needsTextarea = document.getElementById('special-needs-details');
+
+      function updateNeedsVisibility() {
+        const anyChecked = Array.from(needsOptions).some(function (cb) { return cb.checked; });
+        if (anyChecked) {
+          needsGroup.style.display = 'block';
+        } else {
+          needsGroup.style.display = 'none';
+          if (needsTextarea) needsTextarea.value = '';
+        }
+      }
+
+      if (needsNone) {
+        needsNone.addEventListener('change', function () {
+          if (needsNone.checked) {
+            needsOptions.forEach(function (cb) { cb.checked = false; });
+          }
+          updateNeedsVisibility();
+        });
+      }
+
+      needsOptions.forEach(function (cb) {
+        cb.addEventListener('change', function () {
+          if (cb.checked && needsNone) {
+            needsNone.checked = false;
+          }
+          updateNeedsVisibility();
+        });
+      });
+      updateNeedsVisibility();
+
+      // Checkbox group validation
+      function validateCheckboxGroup(name, errorId, onlyWhenSectionVisible) {
+        const checkboxes = document.querySelectorAll('input[name="' + name + '"]');
+        const errorEl = document.getElementById(errorId);
+        if (onlyWhenSectionVisible) {
+          if (itinerarySection && itinerarySection.style.display === 'none') {
+            if (errorEl) errorEl.style.display = 'none';
+            return true;
+          }
+        }
+        const anyChecked = Array.from(checkboxes).some(function (cb) { return cb.checked; });
+        if (!anyChecked) {
+          if (errorEl) errorEl.style.display = 'block';
+          return false;
+        }
+        if (errorEl) errorEl.style.display = 'none';
+        return true;
+      }
+
+      // Add contact to Brevo
+      async function addToBrevo(name, email) {
+        try {
+          const response = await fetch('https://api.brevo.com/v3/contacts', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'api-key': BREVO_API_KEY
+            },
+            body: JSON.stringify({
+              email: email,
+              attributes: {
+                FIRSTNAME: name,
+                SIGNUP_SOURCE: 'travel_planning_questionnaire_he'
+              },
+              listIds: [BREVO_LIST_ID],
+              updateEnabled: true
+            })
+          });
+          return response.ok || response.status === 201 || response.status === 204;
+        } catch (error) {
+          console.error('Brevo error:', error);
+          return false;
+        }
+      }
+
+      // Submit to Formspree
+      async function submitToFormspree(formData) {
+        try {
+          const response = await fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+          return response.ok;
+        } catch (error) {
+          console.error('Formspree error:', error);
+          return false;
+        }
+      }
+
+      // Form submission handler
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Custom validation for checkbox groups
+        let valid = true;
+        if (!validateCheckboxGroup('travel_style[]', 'travel-style-error', false)) valid = false;
+        if (!validateCheckboxGroup('trip_worries[]', 'trip-worries-error', false)) valid = false;
+
+        const serviceSelected = document.querySelector('input[name="service_type"]:checked');
+        if (serviceSelected && serviceSelected.value === 'itinerary_review') {
+          if (!validateCheckboxGroup('itinerary_review_focus[]', 'itinerary-review-error', true)) {
+            valid = false;
+          }
+        } else {
+          const itineraryError = document.getElementById('itinerary-review-error');
+          if (itineraryError) itineraryError.style.display = 'none';
+        }
+
+        if (!form.checkValidity()) {
+          valid = false;
+        }
+
+        if (!valid) {
+          if (errorSummary) errorSummary.style.display = 'block';
+          if (successBox) successBox.style.display = 'none';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          form.reportValidity();
+          return;
+        }
+
+        // Hide previous messages
+        if (errorSummary) errorSummary.style.display = 'none';
+        if (successBox) successBox.style.display = 'none';
+        formMessage.style.display = 'none';
+        formMessage.className = 'form-message';
+
+        // Disable submit button
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'שולח...';
+
+        // Get form data
+        const formData = new FormData(form);
+        const name = formData.get('name');
+        const email = formData.get('email');
+
+        try {
+          // Submit to both Formspree and Brevo in parallel
+          const [formspreeResult, brevoResult] = await Promise.all([
+            submitToFormspree(formData),
+            addToBrevo(name, email)
+          ]);
+
+          if (formspreeResult) {
+            formMessage.textContent = '🎉 תודה! קיבלתי את הפרטים. בדקו את האימייל שלכם לאישור, ואחזור אליכם תוך 48 שעות עם המחיר הסופי.';
+            formMessage.className = 'form-message success';
+            form.reset();
+            window.scrollTo({ top: formMessage.offsetTop - 100, behavior: 'smooth' });
+          } else {
+            throw new Error('Form submission failed');
+          }
+        } catch (error) {
+          console.error('Submission error:', error);
+          formMessage.textContent = '❌ אופס! משהו השתבש. נסו שוב או כתבו ל-hey@mydailyjourneys.com';
+          formMessage.className = 'form-message error';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'שליחת הטופס';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
