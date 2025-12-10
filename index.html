@@ -960,7 +960,7 @@
         <p>💰 Within 48 hours, I'll send you an email with the final price and next steps.</p>
         <p style="margin-top:10px;">
           Questions already? Email me at
-          <a class="email-link" href="mailto:hey@mydailyjourneys.com">hey@mydailyjourneys.com</a>
+          <a class="email-link" href="/cdn-cgi/l/email-protection#751d100c35180c11141c190c1f1a00071b100c065b161a18"><span class="__cf_email__" data-cfemail="e68e839fa68b9f82878f8a9f8c89939488839f95c885898b">[email&#160;protected]</span></a>
         </p>
       </div>
     </form>
@@ -970,10 +970,8 @@
     </footer>
   </div>
 
-  <script>
-    // Formspree Configuration
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnnebldj';
-    // Make Webhook Configuration
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Make Webhook Configuration - handles all form data including file uploads
     const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/8ds4ng7crn42sxjno1q10adm1s2d8y7k';
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -1118,70 +1116,6 @@
         return true;
       }
 
-      // Submit to Formspree (without file uploads - Formspree free plan doesn't support files)
-      async function submitToFormspree(formData) {
-        try {
-          // Create a new FormData without files (Formspree free plan doesn't support file uploads)
-          const formDataForFormspree = new FormData();
-          let fileInfo = null;
-          
-          for (const [key, value] of formData.entries()) {
-            if (value instanceof File) {
-              // Store file info instead of the file itself
-              fileInfo = {
-                name: value.name,
-                size: value.size,
-                type: value.type
-              };
-              // Add file info as text instead
-              formDataForFormspree.append(key + '_info', 'File uploaded: ' + value.name + ' (' + (value.size / 1024).toFixed(2) + ' KB)');
-            } else {
-              formDataForFormspree.append(key, value);
-            }
-          }
-          
-          // Add note about file if one was uploaded
-          if (fileInfo) {
-            formDataForFormspree.append('file_upload_note', 'A file was uploaded with this form. Check Make webhook for the actual file.');
-          }
-          
-          const response = await fetch(FORMSPREE_ENDPOINT, {
-            method: 'POST',
-            body: formDataForFormspree,
-            headers: {
-              'Accept': 'application/json'
-            }
-          });
-          
-          // Check if response is ok
-          if (!response.ok) {
-            let errorData = {};
-            try {
-              const text = await response.text();
-              errorData = text ? JSON.parse(text) : {};
-            } catch (e) {
-              errorData = { error: 'Unknown error', status: response.status };
-            }
-            console.error('Formspree error response:', response.status, errorData);
-            return false;
-          }
-          
-          // Verify response
-          try {
-            const result = await response.json();
-            console.log('Formspree success:', result);
-            return true;
-          } catch (e) {
-            // If response is ok but not JSON, still consider it success
-            console.log('Formspree success (non-JSON response)');
-            return true;
-          }
-        } catch (error) {
-          console.error('Formspree network error:', error);
-          return false;
-        }
-      }
-
       // Submit to Make webhook (supports file uploads)
       async function submitToMake(formData) {
         try {
@@ -1288,15 +1222,12 @@
         }
 
         try {
-          // Submit to both Formspree and Make webhook in parallel
-          const [formspreeResult, makeResult] = await Promise.all([
-            submitToFormspree(formData),
-            submitToMake(formData)
-          ]);
+          // Submit to Make webhook
+          const success = await submitToMake(formData);
 
-          if (formspreeResult) {
+          if (success) {
             // Show success message
-            formMessage.textContent = '🎉 Thank you! Your details have been received successfully. Check your email for confirmation, and I\'ll get back to you within 48 hours with the final price and next steps.';
+            formMessage.textContent = '🎉 Thank you! Your details have been received successfully. I\'ll review your information and get back to you within 48 hours with the final price and next steps.';
             formMessage.className = 'form-message success';
             formMessage.style.display = 'block';
             
@@ -1310,31 +1241,18 @@
               form.reset();
             }, 500);
           } else {
-            // If Make succeeded but Formspree failed, still show success but log the issue
-            if (makeResult) {
-              console.warn('Form submitted to Make but Formspree failed - check Formspree settings');
-              formMessage.textContent = '🎉 Thank you! Your details have been received. If you don\'t receive a confirmation email, please contact us at hey@mydailyjourneys.com';
-              formMessage.className = 'form-message success';
-              formMessage.style.display = 'block';
-              setTimeout(function() {
-                window.scrollTo({ top: formMessage.offsetTop - 100, behavior: 'smooth' });
-              }, 100);
-              setTimeout(function() {
-                form.reset();
-              }, 500);
-            } else {
-              throw new Error('Form submission failed');
-            }
+            throw new Error('Form submission failed');
           }
         } catch (error) {
           console.error('Submission error:', error);
           formMessage.textContent = '❌ Oops! Something went wrong. Please check your internet connection and try again, or email hey@mydailyjourneys.com directly.';
           formMessage.className = 'form-message error';
           formMessage.style.display = 'block';
-          window.scrollTo({ top: formMessage.offsetTop - 100, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         } finally {
+          // Re-enable submit button
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit your answers';
+          submitBtn.textContent = "Send My Details";
         }
       });
     });
