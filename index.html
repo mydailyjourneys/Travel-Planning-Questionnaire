@@ -1125,26 +1125,25 @@
       // Submit to Make webhook (supports file uploads)
       async function submitToMake(formData) {
         try {
-          // Check if there's a file to upload
-          let hasFile = false;
+          // Convert FormData to plain object with base64 file
+          const data = {};
+          
           for (const [key, value] of formData.entries()) {
             if (value instanceof File) {
-              hasFile = true;
-              break;
-            }
-          }
-          
-          if (hasFile) {
-            // If there's a file, send as FormData (multipart/form-data)
-            const response = await fetch(MAKE_WEBHOOK_URL, {
-              method: 'POST',
-              body: formData
-            });
-            return response.ok || response.status === 200 || response.status === 201;
-          } else {
-            // If no file, send as JSON
-            const data = {};
-            for (const [key, value] of formData.entries()) {
+              // Convert file to base64
+              const base64 = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(value);
+              });
+              
+              // Store file data
+              data[key] = base64;
+              data[key + '_name'] = value.name;
+              data[key + '_type'] = value.type;
+              data[key + '_size'] = value.size;
+            } else {
               // Handle multiple values for checkboxes/arrays
               if (data[key]) {
                 if (Array.isArray(data[key])) {
@@ -1156,17 +1155,19 @@
                 data[key] = value;
               }
             }
-
-            const response = await fetch(MAKE_WEBHOOK_URL, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify(data)
-            });
-            return response.ok || response.status === 200 || response.status === 201;
           }
+
+          // Send as JSON
+          const response = await fetch(MAKE_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+          
+          return response.ok || response.status === 200 || response.status === 201;
         } catch (error) {
           console.error('Make webhook error:', error);
           return false;
