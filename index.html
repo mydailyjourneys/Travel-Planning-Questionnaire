@@ -1181,38 +1181,87 @@
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
+        // Hide previous messages
+        if (errorSummary) errorSummary.style.display = 'none';
+        if (successBox) successBox.style.display = 'none';
+        formMessage.style.display = 'none';
+        formMessage.className = 'form-message';
+
         // Custom validation for checkbox groups
         let valid = true;
-        if (!validateCheckboxGroup('travel_style[]', 'travel-style-error', false)) valid = false;
-        if (!validateCheckboxGroup('trip_worries[]', 'trip-worries-error', false)) valid = false;
+        let firstError = null;
+        
+        if (!validateCheckboxGroup('travel_style[]', 'travel-style-error', false)) {
+          valid = false;
+          if (!firstError) firstError = document.querySelector('[name="travel_style[]"]');
+        }
+        if (!validateCheckboxGroup('trip_worries[]', 'trip-worries-error', false)) {
+          valid = false;
+          if (!firstError) firstError = document.querySelector('[name="trip_worries[]"]');
+        }
 
         const serviceSelected = document.querySelector('input[name="service_type"]:checked');
         if (serviceSelected && serviceSelected.value === 'itinerary_review') {
           if (!validateCheckboxGroup('itinerary_review_focus[]', 'itinerary-review-error', true)) {
             valid = false;
+            if (!firstError) firstError = document.querySelector('[name="itinerary_review_focus[]"]');
           }
         } else {
           const itineraryError = document.getElementById('itinerary-review-error');
           if (itineraryError) itineraryError.style.display = 'none';
         }
 
-        if (!form.checkValidity()) {
-          valid = false;
+        // Validate ranking fields (budget priorities)
+        const rankingFields = ['rank_accommodation', 'rank_food', 'rank_activities', 'rank_flights', 'rank_flexibility'];
+        for (const field of rankingFields) {
+          const inputs = document.querySelectorAll(`input[name="${field}"]`);
+          const checked = Array.from(inputs).some(input => input.checked);
+          if (!checked) {
+            valid = false;
+            // Highlight the entire ranking section
+            const priorityItem = inputs[0].closest('.priority-item');
+            if (priorityItem) {
+              priorityItem.style.border = '2px solid #d9534f';
+              priorityItem.style.backgroundColor = '#fff5f5';
+              if (!firstError) firstError = inputs[0];
+            }
+          } else {
+            // Remove highlight if valid
+            const priorityItem = inputs[0].closest('.priority-item');
+            if (priorityItem) {
+              priorityItem.style.border = '';
+              priorityItem.style.backgroundColor = '';
+            }
+          }
+        }
+
+        // Check HTML5 required fields
+        const requiredFields = form.querySelectorAll('[required]');
+        for (const field of requiredFields) {
+          if (!field.checkValidity()) {
+            valid = false;
+            field.style.border = '2px solid #d9534f';
+            if (!firstError) firstError = field;
+          } else {
+            field.style.border = '';
+          }
         }
 
         if (!valid) {
+          // Show error summary
           if (errorSummary) errorSummary.style.display = 'block';
-          if (successBox) successBox.style.display = 'none';
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          form.reportValidity();
+          
+          // Scroll to first error
+          if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+              firstError.focus();
+            }, 500);
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
           return;
         }
-
-        // Hide previous messages
-        if (errorSummary) errorSummary.style.display = 'none';
-        if (successBox) successBox.style.display = 'none';
-        formMessage.style.display = 'none';
-        formMessage.className = 'form-message';
 
         // Disable submit button
         submitBtn.disabled = true;
