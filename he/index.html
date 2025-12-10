@@ -1154,15 +1154,18 @@
           for (const [key, value] of formData.entries()) {
             if (value instanceof File) {
               // Convert file to base64
-              const base64 = await new Promise((resolve, reject) => {
+              const base64Full = await new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result);
                 reader.onerror = reject;
                 reader.readAsDataURL(value);
               });
               
+              // Remove the data URI prefix (data:...;base64,) to get clean base64
+              const base64Clean = base64Full.split(',')[1];
+              
               // Store file data
-              data[key] = base64;
+              data[key] = base64Clean;
               data[key + '_name'] = value.name;
               data[key + '_type'] = value.type;
               data[key + '_size'] = value.size;
