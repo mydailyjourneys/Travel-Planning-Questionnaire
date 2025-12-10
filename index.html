@@ -1118,13 +1118,36 @@
         return true;
       }
 
-      // Submit to Formspree
+      // Submit to Formspree (without file uploads - Formspree free plan doesn't support files)
       async function submitToFormspree(formData) {
         try {
-          // Don't set Content-Type header - browser will set it automatically with boundary for FormData
+          // Create a new FormData without files (Formspree free plan doesn't support file uploads)
+          const formDataForFormspree = new FormData();
+          let fileInfo = null;
+          
+          for (const [key, value] of formData.entries()) {
+            if (value instanceof File) {
+              // Store file info instead of the file itself
+              fileInfo = {
+                name: value.name,
+                size: value.size,
+                type: value.type
+              };
+              // Add file info as text instead
+              formDataForFormspree.append(key + '_info', 'File uploaded: ' + value.name + ' (' + (value.size / 1024).toFixed(2) + ' KB)');
+            } else {
+              formDataForFormspree.append(key, value);
+            }
+          }
+          
+          // Add note about file if one was uploaded
+          if (fileInfo) {
+            formDataForFormspree.append('file_upload_note', 'A file was uploaded with this form. Check Make webhook for the actual file.');
+          }
+          
           const response = await fetch(FORMSPREE_ENDPOINT, {
             method: 'POST',
-            body: formData,
+            body: formDataForFormspree,
             headers: {
               'Accept': 'application/json'
             }
@@ -1159,33 +1182,51 @@
         }
       }
 
-      // Submit to Make webhook
+      // Submit to Make webhook (supports file uploads)
       async function submitToMake(formData) {
         try {
-          // Convert FormData to plain object
-          const data = {};
+          // Check if there's a file to upload
+          let hasFile = false;
           for (const [key, value] of formData.entries()) {
-            // Handle multiple values for checkboxes/arrays
-            if (data[key]) {
-              if (Array.isArray(data[key])) {
-                data[key].push(value);
-              } else {
-                data[key] = [data[key], value];
-              }
-            } else {
-              data[key] = value;
+            if (value instanceof File) {
+              hasFile = true;
+              break;
             }
           }
+          
+          if (hasFile) {
+            // If there's a file, send as FormData (multipart/form-data)
+            const response = await fetch(MAKE_WEBHOOK_URL, {
+              method: 'POST',
+              body: formData
+            });
+            return response.ok || response.status === 200 || response.status === 201;
+          } else {
+            // If no file, send as JSON
+            const data = {};
+            for (const [key, value] of formData.entries()) {
+              // Handle multiple values for checkboxes/arrays
+              if (data[key]) {
+                if (Array.isArray(data[key])) {
+                  data[key].push(value);
+                } else {
+                  data[key] = [data[key], value];
+                }
+              } else {
+                data[key] = value;
+              }
+            }
 
-          const response = await fetch(MAKE_WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
-          return response.ok || response.status === 200 || response.status === 201;
+            const response = await fetch(MAKE_WEBHOOK_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify(data)
+            });
+            return response.ok || response.status === 200 || response.status === 201;
+          }
         } catch (error) {
           console.error('Make webhook error:', error);
           return false;
