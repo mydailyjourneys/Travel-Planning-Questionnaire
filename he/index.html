@@ -116,6 +116,7 @@
     input[type="tel"],
     input[type="number"],
     input[type="date"],
+    input[type="file"],
     textarea,
     select {
       width: 100%;
@@ -135,6 +136,7 @@
     input[type="tel"]:focus,
     input[type="number"]:focus,
     input[type="date"]:focus,
+    input[type="file"]:focus,
     textarea:focus,
     select:focus {
       outline: none;
@@ -416,6 +418,7 @@
     </header>
 
     <form id="intake-form" class="intake-form" method="post" action="#">
+      <input type="hidden" name="language" value="he">
 
       <div id="form-error-summary" class="alert error">
         יש כמה שדות חובה שחסרים או לא הוזנו נכון. גללו למעלה וסמנו את התשובות החסרות.
@@ -430,8 +433,17 @@
         <p class="section-subtitle">פרטי קשר והבנה ראשונית של סוג השירות.</p>
 
         <div class="form-group">
-          <label for="name">שם מלא<span class="required">*</span></label>
-          <input type="text" id="name" name="name" required>
+          <label>שם<span class="required">*</span></label>
+          <div class="form-row">
+            <div class="half">
+              <label for="first-name" style="font-weight:400; font-size:0.9em;">שם פרטי<span class="required">*</span></label>
+              <input type="text" id="first-name" name="first_name" required>
+            </div>
+            <div class="half">
+              <label for="last-name" style="font-weight:400; font-size:0.9em;">שם משפחה<span class="required">*</span></label>
+              <input type="text" id="last-name" name="last_name" required>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
@@ -440,8 +452,8 @@
         </div>
 
         <div class="form-group">
-          <label for="phone">טלפון (רצוי וואטסאפ)</label>
-          <input type="tel" id="phone" name="phone" class="ltr-input">
+          <label for="phone">טלפון (רצוי וואטסאפ)<span class="required">*</span></label>
+          <input type="tel" id="phone" name="phone" class="ltr-input" required>
           <p class="helper-text">אשתמש במספר הזה רק לתקשורת לגבי הטיול.</p>
         </div>
 
@@ -914,9 +926,14 @@
         <p class="section-subtitle">רלוונטי רק אם כבר בניתם מסלול וסימנתם ליווי ובדיקת מסלול.</p>
 
         <div class="form-group">
-          <span class="pill-note">אפשר להדביק כאן טקסט, לינק למסמך או להשתמש במערכת שלכם להעלאת קובץ.</span>
-          <label for="planned-itinerary">שתפו את המסלול שבניתם</label>
-          <textarea id="planned-itinerary" name="planned_itinerary" placeholder="הדביקו כאן את המסלול, או שתפו לינק למסמך/Google Doc."></textarea>
+          <label for="itinerary-file">העלו קובץ עם המסלול שלכם</label>
+          <input type="file" id="itinerary-file" name="itinerary_file" accept=".pdf,.doc,.docx,.txt,.pages,.odt">
+          <p class="helper-text">אפשר להעלות קבצי PDF, Word, טקסט או מסמכים אחרים.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="planned-itinerary">או הדביקו את המסלול כאן</label>
+          <textarea id="planned-itinerary" name="planned_itinerary" placeholder="הדביקו כאן את המסלול שלכם או שתפו קישור למסמך (Google Docs, Dropbox, וכו')."></textarea>
         </div>
 
         <div class="form-group">
@@ -974,10 +991,10 @@
 
 
   <script>
-    // Brevo Configuration
-    const BREVO_API_KEY = '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';
-    const BREVO_LIST_ID = 11; // Hebrew list
+    // Formspree Configuration
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mblnaqol';
+    // Make Webhook Configuration
+    const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/8ds4ng7crn42sxjno1q10adm1s2d8y7k';
 
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('intake-form');
@@ -1121,33 +1138,6 @@
         return true;
       }
 
-      // Add contact to Brevo
-      async function addToBrevo(name, email) {
-        try {
-          const response = await fetch('https://api.brevo.com/v3/contacts', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'api-key': BREVO_API_KEY
-            },
-            body: JSON.stringify({
-              email: email,
-              attributes: {
-                FIRSTNAME: name,
-                SIGNUP_SOURCE: 'travel_planning_questionnaire_he'
-              },
-              listIds: [BREVO_LIST_ID],
-              updateEnabled: true
-            })
-          });
-          return response.ok || response.status === 201 || response.status === 204;
-        } catch (error) {
-          console.error('Brevo error:', error);
-          return false;
-        }
-      }
-
       // Submit to Formspree
       async function submitToFormspree(formData) {
         try {
@@ -1161,6 +1151,39 @@
           return response.ok;
         } catch (error) {
           console.error('Formspree error:', error);
+          return false;
+        }
+      }
+
+      // Submit to Make webhook
+      async function submitToMake(formData) {
+        try {
+          // Convert FormData to plain object
+          const data = {};
+          for (const [key, value] of formData.entries()) {
+            // Handle multiple values for checkboxes/arrays
+            if (data[key]) {
+              if (Array.isArray(data[key])) {
+                data[key].push(value);
+              } else {
+                data[key] = [data[key], value];
+              }
+            } else {
+              data[key] = value;
+            }
+          }
+
+          const response = await fetch(MAKE_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+          return response.ok || response.status === 200 || response.status === 201;
+        } catch (error) {
+          console.error('Make webhook error:', error);
           return false;
         }
       }
@@ -1208,14 +1231,12 @@
 
         // Get form data
         const formData = new FormData(form);
-        const name = formData.get('name');
-        const email = formData.get('email');
 
         try {
-          // Submit to both Formspree and Brevo in parallel
-          const [formspreeResult, brevoResult] = await Promise.all([
+          // Submit to both Formspree and Make webhook in parallel
+          const [formspreeResult, makeResult] = await Promise.all([
             submitToFormspree(formData),
-            addToBrevo(name, email)
+            submitToMake(formData)
           ]);
 
           if (formspreeResult) {
