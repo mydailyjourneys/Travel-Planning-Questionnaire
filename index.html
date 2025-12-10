@@ -444,6 +444,12 @@
         </div>
 
         <div class="form-group">
+          <label for="country">Where are you from?<span class="required">*</span></label>
+          <input type="text" id="country" name="country" placeholder="City, Country" required>
+          <p class="helper-text">This helps me understand your travel style and starting point.</p>
+        </div>
+
+        <div class="form-group">
           <label>Which service are you interested in?<span class="required">*</span></label>
           <div class="radio-group">
             <label>
@@ -970,7 +976,7 @@
     </footer>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // Make Webhook Configuration - handles all form data including file uploads
     const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/8ds4ng7crn42sxjno1q10adm1s2d8y7k';
 
