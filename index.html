@@ -242,8 +242,12 @@
     .form-message.success {
       background: #e8f8f5;
       color: #1e8449;
-      border: 1px solid #abebc6;
+      border: 2px solid #1e8449;
       display: block;
+      font-weight: 600;
+      padding: 20px;
+      margin-top: 30px;
+      box-shadow: 0 4px 15px rgba(30, 132, 73, 0.2);
     }
 
     .form-message.error {
@@ -747,13 +751,12 @@
             <label><input type="radio" name="food_style" value="mix"> Mix of local + nice restaurants</label>
             <label><input type="radio" name="food_style" value="fine_dining"> Fine dining experiences</label>
             <label><input type="radio" name="food_style" value="not_picky"> I just need food - not picky</label>
-            <label><input type="radio" name="food_style" value="dietary"> Specific dietary needs (explain below)</label>
           </div>
         </div>
 
         <div class="form-group">
           <label for="dietary">Any dietary restrictions or food allergies?</label>
-          <textarea id="dietary" name="dietary" placeholder="Vegan, gluten free, allergies, religious restrictions, etc."></textarea>
+          <textarea id="dietary" name="dietary" placeholder="Vegan, gluten free, allergies, religious restrictions, etc. You can also share any additional food preferences here."></textarea>
         </div>
       </section>
 
@@ -1125,7 +1128,18 @@
               'Accept': 'application/json'
             }
           });
-          return response.ok;
+          
+          // Check if response is ok
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error('Formspree error response:', response.status, errorData);
+            return false;
+          }
+          
+          // Verify response
+          const result = await response.json().catch(() => ({}));
+          console.log('Formspree success:', result);
+          return true;
         } catch (error) {
           console.error('Formspree error:', error);
           return false;
@@ -1217,10 +1231,20 @@
           ]);
 
           if (formspreeResult) {
-            formMessage.textContent = '🎉 Thank you! I received your details. Check your email for confirmation, and I\'ll get back to you within 48 hours with the final price.';
+            // Show success message
+            formMessage.textContent = '🎉 Thank you! Your details have been received successfully. Check your email for confirmation, and I\'ll get back to you within 48 hours with the final price and next steps.';
             formMessage.className = 'form-message success';
-            form.reset();
-            window.scrollTo({ top: formMessage.offsetTop - 100, behavior: 'smooth' });
+            formMessage.style.display = 'block';
+            
+            // Scroll to message
+            setTimeout(function() {
+              window.scrollTo({ top: formMessage.offsetTop - 100, behavior: 'smooth' });
+            }, 100);
+            
+            // Reset form after showing message
+            setTimeout(function() {
+              form.reset();
+            }, 500);
           } else {
             throw new Error('Form submission failed');
           }
@@ -1228,6 +1252,8 @@
           console.error('Submission error:', error);
           formMessage.textContent = '❌ Oops! Something went wrong. Please try again or email hey@mydailyjourneys.com';
           formMessage.className = 'form-message error';
+          formMessage.style.display = 'block';
+          window.scrollTo({ top: formMessage.offsetTop - 100, behavior: 'smooth' });
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Submit your answers';
