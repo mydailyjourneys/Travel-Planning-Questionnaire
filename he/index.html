@@ -1144,6 +1144,7 @@
       // Submit to Formspree
       async function submitToFormspree(formData) {
         try {
+          // Don't set Content-Type header - browser will set it automatically with boundary for FormData
           const response = await fetch(FORMSPREE_ENDPOINT, {
             method: 'POST',
             body: formData,
@@ -1154,17 +1155,29 @@
           
           // Check if response is ok
           if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
+            let errorData = {};
+            try {
+              const text = await response.text();
+              errorData = text ? JSON.parse(text) : {};
+            } catch (e) {
+              errorData = { error: 'Unknown error', status: response.status };
+            }
             console.error('Formspree error response:', response.status, errorData);
             return false;
           }
           
           // Verify response
-          const result = await response.json().catch(() => ({}));
-          console.log('Formspree success:', result);
-          return true;
+          try {
+            const result = await response.json();
+            console.log('Formspree success:', result);
+            return true;
+          } catch (e) {
+            // If response is ok but not JSON, still consider it success
+            console.log('Formspree success (non-JSON response)');
+            return true;
+          }
         } catch (error) {
-          console.error('Formspree error:', error);
+          console.error('Formspree network error:', error);
           return false;
         }
       }
@@ -1245,6 +1258,16 @@
 
         // Get form data
         const formData = new FormData(form);
+        
+        // Debug: Log form data (for troubleshooting)
+        console.log('שולח נתוני טופס...');
+        for (const [key, value] of formData.entries()) {
+          if (value instanceof File) {
+            console.log(key + ':', value.name, '(' + value.size + ' bytes)');
+          } else {
+            console.log(key + ':', value);
+          }
+        }
 
         try {
           // Submit to both Formspree and Make webhook in parallel
@@ -1269,11 +1292,25 @@
               form.reset();
             }, 500);
           } else {
-            throw new Error('Form submission failed');
+            // If Make succeeded but Formspree failed, still show success but log the issue
+            if (makeResult) {
+              console.warn('הטופס נשלח ל-Make אבל Formspree נכשל - בדקו את הגדרות Formspree');
+              formMessage.textContent = '🎉 תודה! הפרטים התקבלו. אם לא תקבלו אימייל אישור, אנא פנו אלינו ב-hey@mydailyjourneys.com';
+              formMessage.className = 'form-message success';
+              formMessage.style.display = 'block';
+              setTimeout(function() {
+                window.scrollTo({ top: formMessage.offsetTop - 100, behavior: 'smooth' });
+              }, 100);
+              setTimeout(function() {
+                form.reset();
+              }, 500);
+            } else {
+              throw new Error('Form submission failed');
+            }
           }
         } catch (error) {
           console.error('Submission error:', error);
-          formMessage.textContent = '❌ אופס! משהו השתבש. נסו שוב או כתבו ל-hey@mydailyjourneys.com';
+          formMessage.textContent = '❌ אופס! משהו השתבש. אנא בדקו את חיבור האינטרנט ונסו שוב, או כתבו ישירות ל-hey@mydailyjourneys.com';
           formMessage.className = 'form-message error';
           formMessage.style.display = 'block';
           window.scrollTo({ top: formMessage.offsetTop - 100, behavior: 'smooth' });
