@@ -1005,7 +1005,7 @@
     
     // Google Apps Script URL for direct Drive upload (no file size limit!)
     // IMPORTANT: Replace this with your Apps Script deployment URL
-    const GOOGLE_DRIVE_UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbzMuiJbJ5I_6I3QxfoO9OR-n7McEV0UnqzsIXlxZc1oJotZzn4vObJOExM0SjJNcc7oqg/exec';
+    const GOOGLE_DRIVE_UPLOAD_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
 
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('intake-form');
@@ -1161,10 +1161,11 @@
           });
           
           // Upload to Drive via Apps Script
+          // IMPORTANT: Using text/plain to bypass CORS preflight check!
           const response = await fetch(GOOGLE_DRIVE_UPLOAD_URL, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'text/plain;charset=utf-8',
             },
             body: JSON.stringify({
               fileData: base64,
