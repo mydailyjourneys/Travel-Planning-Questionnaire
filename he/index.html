@@ -1153,7 +1153,7 @@
           
           for (const [key, value] of formData.entries()) {
             if (value instanceof File) {
-              // Convert file to base64
+              // Convert file to base64 WITH data URI prefix (needed for Google Drive)
               const base64Full = await new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result);
@@ -1161,11 +1161,8 @@
                 reader.readAsDataURL(value);
               });
               
-              // Remove the data URI prefix (data:...;base64,) to get clean base64
-              const base64Clean = base64Full.split(',')[1];
-              
-              // Store file data
-              data[key] = base64Clean;
+              // Store FULL base64 string (with data:type;base64, prefix)
+              data[key] = base64Full;
               data[key + '_name'] = value.name;
               data[key + '_type'] = value.type;
               data[key + '_size'] = value.size;
