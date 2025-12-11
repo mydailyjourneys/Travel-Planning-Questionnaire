@@ -915,8 +915,7 @@
         <div class="form-group">
           <label for="itinerary-file">Upload a file with your itinerary</label>
           <input type="file" id="itinerary-file" name="itinerary_file" accept=".pdf,.doc,.docx,.txt,.pages,.odt">
-          <p class="helper-text">You can upload PDF, Word, text files, or other document formats. <strong>Maximum file size: 2MB</strong></p>
-          <p id="file-size-error" style="display:none; color: #d9534f; font-size: 0.9em; margin-top: 5px;">⚠️ File is too large. Please upload a file smaller than 2MB, or share a link instead.</p>
+          <p class="helper-text">You can upload PDF, Word, text files, or other document formats. <strong>No file size limit!</strong> Files are uploaded directly to Google Drive.</p>
         </div>
 
         <div class="form-group">
@@ -980,6 +979,10 @@
   <script>
     // Make Webhook Configuration - handles all form data including file uploads
     const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/8ds4ng7crn42sxjno1q10adm1s2d8y7k';
+    
+    // Google Apps Script URL for direct Drive upload (no file size limit!)
+    // IMPORTANT: Replace this with your Apps Script deployment URL
+    const GOOGLE_DRIVE_UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbzucjuX-KLhoiTm90h5_OoE-GisLbyxqecXx45iIBhWiwIUGmWZGFZE21cTStK7-RQ88w/exec';
 
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('intake-form');
@@ -1123,27 +1126,65 @@
         return true;
       }
 
+      // Upload file directly to Google Drive
+      async function uploadToDrive(file) {
+        try {
+          // Convert file to base64
+          const base64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result.split(',')[1]); // Remove data URI prefix
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+          
+          // Upload to Drive via Apps Script
+          const response = await fetch(GOOGLE_DRIVE_UPLOAD_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              fileData: base64,
+              fileName: file.name,
+              mimeType: file.type
+            })
+          });
+          
+          const result = await response.json();
+          
+          if (result.success) {
+            return {
+              fileUrl: result.fileUrl,
+              fileName: result.fileName
+            };
+          } else {
+            throw new Error(result.error || 'Upload failed');
+          }
+        } catch (error) {
+          console.error('Drive upload error:', error);
+          return null;
+        }
+      }
+
       // Submit to Make webhook (supports file uploads)
       async function submitToMake(formData) {
         try {
-          // Convert FormData to plain object with base64 file
+          // Convert FormData to plain object
           const data = {};
           
           for (const [key, value] of formData.entries()) {
             if (value instanceof File) {
-              // Convert file to base64 WITH data URI prefix (needed for Google Drive)
-              const base64Full = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(value);
-              });
+              // Upload file to Drive first
+              const driveResult = await uploadToDrive(value);
               
-              // Store FULL base64 string (with data:type;base64, prefix)
-              data[key] = base64Full;
-              data[key + '_name'] = value.name;
-              data[key + '_type'] = value.type;
-              data[key + '_size'] = value.size;
+              if (driveResult) {
+                // Store Drive link instead of file data
+                data['itinerary_file_link'] = driveResult.fileUrl;
+                data['itinerary_file_name'] = driveResult.fileName;
+              } else {
+                // If Drive upload fails, notify user
+                throw new Error('File upload failed. Please try again or share a link instead.');
+              }
             } else {
               // Handle multiple values for checkboxes/arrays
               if (data[key]) {
@@ -1189,22 +1230,6 @@
         let valid = true;
         let firstError = null;
         
-        // Validate file size (max 2MB = 2097152 bytes)
-        const fileInput = document.getElementById('itinerary-file');
-        const fileSizeError = document.getElementById('file-size-error');
-        if (fileInput && fileInput.files && fileInput.files[0]) {
-          const fileSize = fileInput.files[0].size;
-          const maxSize = 2097152; // 2MB in bytes
-          if (fileSize > maxSize) {
-            valid = false;
-            if (fileSizeError) fileSizeError.style.display = 'block';
-            fileInput.style.border = '2px solid #d9534f';
-            if (!firstError) firstError = fileInput;
-          } else {
-            if (fileSizeError) fileSizeError.style.display = 'none';
-            fileInput.style.border = '';
-          }
-        }
         
         if (!validateCheckboxGroup('travel_style[]', 'travel-style-error', false)) {
           valid = false;
