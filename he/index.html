@@ -937,7 +937,8 @@
         <div class="form-group">
           <label for="itinerary-file">העלו קובץ עם המסלול שלכם</label>
           <input type="file" id="itinerary-file" name="itinerary_file" accept=".pdf,.doc,.docx,.txt,.pages,.odt">
-          <p class="helper-text">אפשר להעלות קבצי PDF, Word, טקסט או מסמכים אחרים.</p>
+          <p class="helper-text">אפשר להעלות קבצי PDF, Word, טקסט או מסמכים אחרים. <strong>גודל מקסימלי: 2MB</strong></p>
+          <p id="file-size-error" style="display:none; color: #d9534f; font-size: 0.9em; margin-top: 5px;">⚠️ הקובץ גדול מדי. אנא העלו קובץ קטן מ-2MB, או שתפו קישור במקום.</p>
         </div>
 
         <div class="form-group">
@@ -1210,6 +1211,23 @@
         // Custom validation for checkbox groups
         let valid = true;
         let firstError = null;
+        
+        // Validate file size (max 2MB = 2097152 bytes)
+        const fileInput = document.getElementById('itinerary-file');
+        const fileSizeError = document.getElementById('file-size-error');
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          const fileSize = fileInput.files[0].size;
+          const maxSize = 2097152; // 2MB in bytes
+          if (fileSize > maxSize) {
+            valid = false;
+            if (fileSizeError) fileSizeError.style.display = 'block';
+            fileInput.style.border = '2px solid #d9534f';
+            if (!firstError) firstError = fileInput;
+          } else {
+            if (fileSizeError) fileSizeError.style.display = 'none';
+            fileInput.style.border = '';
+          }
+        }
         
         if (!validateCheckboxGroup('travel_style[]', 'travel-style-error', false)) {
           valid = false;
