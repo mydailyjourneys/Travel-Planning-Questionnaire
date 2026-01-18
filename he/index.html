@@ -569,6 +569,10 @@
               תכנון טיול מלא מההתחלה
             </label>
             <label>
+              <input type="radio" name="service_type" value="consultation_call">
+              שיחת ייעוץ (שיחה קצרה לקבלת כיוון והמלצות)
+            </label>
+            <label>
               <input type="radio" name="service_type" value="not_sure">
               עוד לא בטוחים - צריכים עזרה להבין מה מתאים לנו
             </label>
@@ -1078,7 +1082,7 @@
         <p>💰 תוך 48 שעות אשלח לכם אימייל עם המחיר הסופי והצעדים הבאים.</p>
         <p style="margin-top:10px;">
           שאלות כבר עכשיו? אפשר לכתוב ל
-          <a class="email-link" href="/cdn-cgi/l/email-protection#076f627e476a7e63666e6b7e6d68727569627e742964686a"><span class="__cf_email__" data-cfemail="cfa7aab68fa2b6abaea6a3b6a5a0babda1aab6bce1aca0a2">[email&#160;protected]</span></a>
+          <a class="email-link" href="mailto:hey@mydailyjourneys.com">hey@mydailyjourneys.com</a>
         </p>
       </div>
     </form>
@@ -1458,7 +1462,7 @@
           }
         } catch (error) {
           console.error('Submission error:', error);
-          formMessage.textContent = '❌ אופס! משהו השתבש. אנא בדוק/י את חיבור האינטרנט ונסה/י שוב, או שלח/י מייל ישירות אל hey@mydailyjourneys.com';
+          formMessage.textContent = '❌ אופס! משהו השתבש. אנא בדוק/י את חיבור האינטרנט ונסה/י שוב, או שלח/י מייל ישירות ל-hey@mydailyjourneys.com';
           formMessage.className = 'form-message error';
           formMessage.style.display = 'block';
           window.scrollTo({ top: 0, behavior: 'smooth' });
