@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>איך היה הטיול? - My Daily Journeys</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="טופס משוב אחרי הטיול עבור מטיילי My Daily Journeys.">
+
+  <!-- Google Font: Varela Round -->
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Varela Round', sans-serif;
+      background-color: #fff3cd;
+      color: #333;
+      line-height: 1.6;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%);
+      border-radius: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(236, 112, 11, 0.1);
+    }
+
+    .lang-toggle {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.85em;
+      color: #EC700B;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: all 0.2s ease;
+    }
+
+    .lang-toggle:hover {
+      background: #EC700B;
+      color: #ffffff;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      color: #EC700B;
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+
+    .subheadline {
+      font-size: 1em;
+      color: #555;
+      max-width: 520px;
+      margin: 0 auto 10px;
+    }
+
+    .small-note {
+      font-size: 0.85em;
+      color: #777;
+      margin-top: 10px;
+    }
+
+    .feedback-form {
+      margin-top: 30px;
+      margin-bottom: 40px;
+    }
+
+    .form-section {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-section h2 {
+      color: #EC700B;
+      font-size: 1.4em;
+      margin-bottom: 6px;
+    }
+
+    .section-subtitle {
+      font-size: 0.9em;
+      color: #777;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.95em;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .required {
+      color: #EC700B;
+      margin-right: 3px;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-family: 'Varela Round', sans-serif;
+      font-size: 0.95em;
+      background: #ffffff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="file"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #EC700B;
+      box-shadow: 0 0 0 2px rgba(236, 112, 11, 0.15);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .helper-text {
+      font-size: 0.8em;
+      color: #777;
+      margin-top: 4px;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .radio-group label,
+    .checkbox-group label {
+      font-weight: 400;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 0.93em;
+    }
+
+    .radio-group input,
+    .checkbox-group input {
+      margin-top: 2px;
+    }
+
+    .pill-note {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #fff3cd;
+      color: #555;
+      font-size: 0.8em;
+      margin-bottom: 10px;
+    }
+
+    .field-error {
+      display: none;
+      font-size: 0.8em;
+      color: #c0392b;
+      margin-top: 4px;
+    }
+
+    /* Star rating */
+    .star-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .star-choice {
+      cursor: pointer;
+      font-size: 2.2em;
+      line-height: 1;
+      color: #ddd;
+      transition: color 0.15s ease, transform 0.1s ease;
+      user-select: none;
+    }
+
+    .star-choice input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .star-choice.on {
+      color: #EC700B;
+    }
+
+    .star-choice:hover {
+      transform: scale(1.12);
+    }
+
+    .form-message {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      display: none;
+      text-align: center;
+    }
+
+    .form-message.success {
+      background: #e8f8f5;
+      color: #1e8449;
+      border: 2px solid #1e8449;
+      display: block;
+      font-weight: 600;
+      padding: 20px;
+      margin-top: 30px;
+      box-shadow: 0 4px 15px rgba(30, 132, 73, 0.2);
+    }
+
+    .form-message.error {
+      background: #ffe6e2;
+      color: #c0392b;
+      border: 1px solid #f5b7b1;
+      display: block;
+    }
+
+    .form-message a {
+      color: inherit;
+      font-weight: bold;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #EC700B;
+      color: white;
+      padding: 16px 32px;
+      font-size: 1.05em;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(236, 112, 11, 0.3);
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      font-family: 'Varela Round', sans-serif;
+    }
+
+    .cta-button:hover {
+      background-color: #d46209;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(236, 112, 11, 0.4);
+    }
+
+    .cta-button:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
+    }
+
+    .submit-row {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 10px 10px;
+      font-size: 0.8em;
+      color: #888;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+      .hero {
+        padding: 45px 15px 25px;
+        margin-bottom: 25px;
+      }
+      .subheadline {
+        font-size: 0.95em;
+      }
+      .form-section {
+        padding: 20px 18px;
+        margin-bottom: 20px;
+      }
+      .form-section h2 {
+        font-size: 1.3em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      .hero {
+        padding: 45px 12px 20px;
+        margin-bottom: 20px;
+      }
+      .form-section {
+        padding: 16px 14px;
+        margin-bottom: 16px;
+      }
+      .form-section h2 {
+        font-size: 1.2em;
+      }
+      input[type="text"],
+      input[type="file"],
+      textarea {
+        padding: 10px;
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+      .star-choice {
+        font-size: 2.5em;
+      }
+      .cta-button {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <a class="lang-toggle" id="lang-toggle" href="/feedback/">English</a>
+      <h1>איך היה הטיול?</h1>
+      <p class="subheadline">
+        ברוכים השבים הביתה! שתי דקות מזמנכם, וזה שווה לי עולם ומלואו.
+        המשוב שלכם הוא מה שהופך את הטיול הבא לעוד יותר טוב.
+      </p>
+      <p class="small-note">שדות עם <span class="required">*</span> הם חובה.</p>
+    </header>
+
+    <form id="feedback-form" class="feedback-form" method="post" action="#">
+
+      <!-- THE TRIP -->
+      <section class="form-section">
+        <h2>הטיול</h2>
+        <p class="section-subtitle">התמונה הגדולה והרגעים שנשארו איתכם.</p>
+
+        <div class="form-group">
+          <label>איך היה הטיול שלכם, בגדול?<span class="required">*</span></label>
+          <div class="star-row" id="star-row">
+            <label class="star-choice"><input type="radio" name="rating" value="1"><span>&#9733;</span></label>
+            <label class="star-choice"><input type="radio" name="rating" value="2"><span>&#9733;</span></label>
+            <label class="star-choice"><input type="radio" name="rating" value="3"><span>&#9733;</span></label>
+            <label class="star-choice"><input type="radio" name="rating" value="4"><span>&#9733;</span></label>
+            <label class="star-choice"><input type="radio" name="rating" value="5"><span>&#9733;</span></label>
+          </div>
+          <p class="helper-text">1 = מאכזב, 5 = בלתי נשכח.</p>
+          <p class="field-error" id="rating-error">בחרו דירוג כוכבים בבקשה.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="highlight">מה היה רגע השיא של הטיול?<span class="required">*</span></label>
+          <textarea id="highlight" name="highlight" required placeholder="מקום, ארוחה, רגע קטן שנשאר איתכם."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="improve">מה נוכל לשפר? (נשאר בינינו)</label>
+          <span class="pill-note">פרטי. מגיע רק למאיה ולא מתפרסם בשום מקום.</span>
+          <textarea id="improve" name="improve" placeholder="כנות עוזרת לי להשתפר. שום דבר לא קטן מדי."></textarea>
+        </div>
+      </section>
+
+      <!-- A WORD TO FRIENDS -->
+      <section class="form-section">
+        <h2>מילה לחברים</h2>
+        <p class="section-subtitle">המשפט שעוזר למטיילים הבאים למצוא אותי.</p>
+
+        <div class="form-group">
+          <label for="friend-sentence">אם חברים היו שואלים אתכם למה שווה לתכנן איתי את הטיול, מה הייתם עונים במשפט אחד?<span class="required">*</span></label>
+          <textarea id="friend-sentence" name="friend_sentence" required placeholder="משפט אחד כן, במילים שלכם."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>מותר לי לשתף ציטוט מהתשובות שלכם?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="quote_permission" value="with_first_name" required> כן, עם השם הפרטי שלנו</label>
+            <label><input type="radio" name="quote_permission" value="anonymous"> כן, אבל בעילום שם</label>
+            <label><input type="radio" name="quote_permission" value="private_only"> לא, שיישאר בינינו בלבד</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="name">איך קוראים לכם? (לא חובה)</label>
+          <input type="text" id="name" name="name" autocomplete="name" placeholder="שם פרטי מספיק">
+        </div>
+      </section>
+
+      <!-- LOCAL HEROES -->
+      <section class="form-section">
+        <h2>גיבורים מקומיים</h2>
+        <p class="section-subtitle">עזרו לי לבנות את רשימת אנשי המקצוע המקומיים שאני סומכת עליהם.</p>
+
+        <div class="form-group">
+          <label for="local-shoutout">פגשתם נהג, מדריך או בעל מקצוע מקומי מצוין? שם + ווצאפ או פייסבוק + מה התפקיד, ואכניס אותם למאגר המומלצים שלי.</label>
+          <textarea id="local-shoutout" name="local_shoutout" placeholder="לדוגמה: מר טאן, נהג בהאנוי, ווצאפ ‎+84 91 234 5678, אדיב ותמיד בזמן."></textarea>
+        </div>
+      </section>
+
+      <!-- PHOTOS -->
+      <section class="form-section">
+        <h2>תמונות מהטיול</h2>
+        <p class="section-subtitle">לגמרי לא חובה, ותמיד עושה לי את היום.</p>
+
+        <div class="form-group">
+          <label for="photos">רוצים לשתף תמונה או שתיים מהטיול? (עד 3)</label>
+          <input type="file" id="photos" name="photos" accept="image/*" multiple>
+          <p class="helper-text" id="photos-status">התמונות עולות ישירות לגוגל דרייב שלי.</p>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="photo-share-ok" name="photo_share_ok" value="yes"> אפשר לשתף את התמונות (באתר או ברשתות החברתיות)</label>
+          </div>
+          <p class="helper-text">אם לא תסמנו, התמונות נשארות פרטיות, רק בשבילי.</p>
+        </div>
+      </section>
+
+      <!-- SUBMIT -->
+      <div class="submit-row">
+        <button type="submit" class="cta-button" id="submitBtn">שליחת המשוב</button>
+        <div id="formMessage" class="form-message"></div>
+      </div>
+    </form>
+
+    <footer>
+      &copy; 2026 My Daily Journeys
+    </footer>
+  </div>
+
+  <script>
+    // Supabase events endpoint (table quote_events, PUBLIC anon key only,
+    // RLS allows anon INSERT and nothing else). Same beacon pattern as the
+    // quote analytics.
+    const SUPABASE_URL = 'https://xmvbnprriiytzkzxuhqa.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtdmJucHJyaWl5dHprenh1aHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NDc0MDksImV4cCI6MjA5NDMyMzQwOX0.vgyqz9_BO91vcQ3CQungDGILDNXem0D97R5zKyM0sno';
+    const EVENTS_ENDPOINT = SUPABASE_URL + '/rest/v1/quote_events?apikey=' + SUPABASE_ANON_KEY;
+
+    // Google Apps Script URL for direct Drive upload (no file size limit!)
+    const GOOGLE_DRIVE_UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbzMuiJbJ5I_6I3QxfoO9OR-n7McEV0UnqzsIXlxZc1oJotZzn4vObJOExM0SjJNcc7oqg/exec';
+
+    const WHATSAPP_URL = 'https://wa.me/13025205331';
+    const MAX_PHOTOS = 3;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('feedback-form');
+      const submitBtn = document.getElementById('submitBtn');
+      const formMessage = document.getElementById('formMessage');
+      const ratingError = document.getElementById('rating-error');
+      const photosInput = document.getElementById('photos');
+      const photosStatus = document.getElementById('photos-status');
+      const langToggle = document.getElementById('lang-toggle');
+
+      // Trip slug from the URL (?c=trip-slug), used to link feedback to a trip.
+      const slug = new URLSearchParams(window.location.search).get('c') || 'unknown';
+
+      // Keep the ?c= parameter when switching language.
+      if (langToggle && window.location.search) {
+        langToggle.href = langToggle.getAttribute('href') + window.location.search;
+      }
+
+      // Star rating painting
+      const starChoices = Array.from(document.querySelectorAll('.star-choice'));
+      function paintStars(value) {
+        starChoices.forEach(function (choice, i) {
+          choice.classList.toggle('on', i < value);
+        });
+      }
+      starChoices.forEach(function (choice) {
+        const input = choice.querySelector('input');
+        input.addEventListener('change', function () {
+          paintStars(parseInt(input.value, 10));
+          ratingError.style.display = 'none';
+        });
+      });
+
+      // Photo count feedback + limit note
+      photosInput.addEventListener('change', function () {
+        const count = photosInput.files.length;
+        if (count === 0) {
+          photosStatus.textContent = 'התמונות עולות ישירות לגוגל דרייב שלי.';
+        } else if (count > MAX_PHOTOS) {
+          photosStatus.textContent = 'נבחרו ' + count + ' תמונות. רק 3 הראשונות יעלו.';
+        } else if (count === 1) {
+          photosStatus.textContent = 'נבחרה תמונה אחת.';
+        } else {
+          photosStatus.textContent = 'נבחרו ' + count + ' תמונות.';
+        }
+      });
+
+      // Upload one file directly to Google Drive via Apps Script.
+      // IMPORTANT: Using text/plain to bypass CORS preflight check!
+      async function uploadToDrive(file, index) {
+        try {
+          const base64 = await new Promise(function (resolve, reject) {
+            const reader = new FileReader();
+            reader.onload = function () { resolve(reader.result.split(',')[1]); };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+
+          const response = await fetch(GOOGLE_DRIVE_UPLOAD_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify({
+              fileData: base64,
+              fileName: 'feedback_' + slug + '_' + (index + 1) + '_' + file.name,
+              mimeType: file.type
+            })
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            return { fileUrl: result.fileUrl, fileName: result.fileName };
+          }
+          throw new Error(result.error || 'Upload failed');
+        } catch (error) {
+          console.error('Drive upload error:', error);
+          return null;
+        }
+      }
+
+      // Insert the feedback into Supabase (quote_events, anon INSERT only).
+      async function sendToSupabase(meta) {
+        const body = JSON.stringify({
+          slug: slug,
+          event: 'feedback_response',
+          meta: meta
+        });
+        const response = await fetch(EVENTS_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: body
+        });
+        return response.ok;
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        formMessage.style.display = 'none';
+        formMessage.className = 'form-message';
+
+        // Validate star rating (custom widget)
+        let valid = true;
+        let firstError = null;
+        const ratingInput = document.querySelector('input[name="rating"]:checked');
+        if (!ratingInput) {
+          valid = false;
+          ratingError.style.display = 'block';
+          firstError = document.getElementById('star-row');
+        }
+
+        // HTML5 required fields
+        const requiredFields = form.querySelectorAll('[required]');
+        for (const field of requiredFields) {
+          if (!field.checkValidity()) {
+            valid = false;
+            field.style.border = '2px solid #d9534f';
+            if (!firstError) firstError = field;
+          } else {
+            field.style.border = '';
+          }
+        }
+
+        if (!valid) {
+          if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'שולחים...';
+
+        try {
+          // 1) Upload photos to Drive first (independent of Supabase).
+          const files = Array.from(photosInput.files).slice(0, MAX_PHOTOS);
+          const photos = [];
+          let photosFailed = 0;
+          for (let i = 0; i < files.length; i++) {
+            photosStatus.textContent = 'מעלים תמונה ' + (i + 1) + ' מתוך ' + files.length + '...';
+            const uploaded = await uploadToDrive(files[i], i);
+            if (uploaded) {
+              photos.push({ name: uploaded.fileName, url: uploaded.fileUrl });
+            } else {
+              photosFailed++;
+            }
+          }
+          if (files.length > 0) {
+            photosStatus.textContent = 'עלו ' + photos.length + ' מתוך ' + files.length + ' תמונות.';
+          }
+
+          // 2) Insert all answers into Supabase.
+          const meta = {
+            lang: 'he',
+            rating: parseInt(ratingInput.value, 10),
+            highlight: document.getElementById('highlight').value.trim(),
+            improve_private: document.getElementById('improve').value.trim(),
+            friend_sentence: document.getElementById('friend-sentence').value.trim(),
+            quote_permission: document.querySelector('input[name="quote_permission"]:checked').value,
+            name: document.getElementById('name').value.trim(),
+            local_shoutout: document.getElementById('local-shoutout').value.trim(),
+            photo_share_ok: document.getElementById('photo-share-ok').checked,
+            photos: photos,
+            photos_failed: photosFailed,
+            submitted_at: new Date().toISOString(),
+            page: window.location.pathname
+          };
+
+          const ok = await sendToSupabase(meta);
+          if (!ok) {
+            throw new Error('Supabase insert failed');
+          }
+
+          formMessage.textContent = 'תודה ענקית! המשוב שלכם התקבל, ואני קוראת כל מילה. זה בדיוק מה שעוזר לי לבנות טיולים עוד יותר טובים. שתהיה לכם נחיתה רכה בבית!';
+          formMessage.className = 'form-message success';
+          formMessage.style.display = 'block';
+          form.querySelectorAll('.form-section').forEach(function (s) { s.style.display = 'none'; });
+          submitBtn.style.display = 'none';
+          setTimeout(function () {
+            window.scrollTo({ top: formMessage.offsetTop - 100, behavior: 'smooth' });
+          }, 100);
+        } catch (error) {
+          console.error('Submission error:', error);
+          formMessage.innerHTML = 'משהו השתבש בשליחה. אפשר לנסות שוב בעוד רגע, או פשוט לשלוח לי את התשובות ישירות ב<a href="' + WHATSAPP_URL + '" target="_blank" rel="noopener">ווצאפ</a>. התשובות שלכם עדיין שמורות כאן בעמוד.';
+          formMessage.className = 'form-message error';
+          formMessage.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'שליחת המשוב';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
