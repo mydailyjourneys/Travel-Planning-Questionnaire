@@ -1298,6 +1298,7 @@
           const data = {};
           
           for (const [key, value] of formData.entries()) {
+            if (value instanceof File && !value.name && !value.size) continue; // empty file input
             if (value instanceof File) {
               // Upload file to Drive first
               const driveResult = await uploadToDrive(value);
