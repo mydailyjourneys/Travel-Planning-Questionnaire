@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Travel Planning Intake Form - My Daily Journeys</title>
+  <title>Let's Plan Your Trip - My Daily Journeys</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Personal travel planning intake form for custom trip consulting with My Daily Journeys.">
 
@@ -372,6 +372,9 @@
         flex-direction: column;
         gap: 10px;
       }
+      .form-row .half, .form-row .third {
+        flex: 1 1 auto;
+      }
       input[type="text"],
       input[type="email"],
       input[type="tel"],
@@ -502,10 +505,9 @@
 <body>
   <div class="container">
     <header class="hero">
-      <h1>Custom Trip Planning Form</h1>
+      <h1>Let's Plan Your Trip</h1>
       <p class="subheadline">
-        Tell me who you are as a traveler, what you dream about and what you worry about.
-        I will do the nerdy planning part.
+        A few minutes of answers and I know who you are, where you want to go and what matters to you on the way. No payment at this stage.
       </p>
       <p class="small-note">Fields marked with <span class="required">*</span> are required.</p>
     </header>
@@ -560,12 +562,16 @@
           <label>Which service are you interested in?<span class="required">*</span></label>
           <div class="radio-group">
             <label>
-              <input type="radio" name="service_type" value="itinerary_review" required>
-              Itinerary Review &amp; Polish (I've already planned my trip)
+              <input type="radio" name="service_type" value="full_custom" required>
+              Full custom planning, including all bookings and support throughout the trip
             </label>
             <label>
-              <input type="radio" name="service_type" value="full_custom">
-              Full Custom Planning (Build my trip from scratch)
+              <input type="radio" name="service_type" value="execute_existing">
+              I already have an itinerary: book it through trusted local suppliers, with Maya's support
+            </label>
+            <label>
+              <input type="radio" name="service_type" value="itinerary_review">
+              Itinerary review &amp; polish (I've already planned my trip)
             </label>
             <label>
               <input type="radio" name="service_type" value="not_sure">
@@ -847,6 +853,24 @@
         </div>
 
         <div class="form-group">
+          <label>How are you with long drives?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="long_drives" value="fine" required> Totally fine, even 5-6 hours with stops</label>
+            <label><input type="radio" name="long_drives" value="up_to_3"> Up to 3 hours a day, no more</label>
+            <label><input type="radio" name="long_drives" value="prefer_flights"> As little as possible. Domestic flights, even if they cost more</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="start-time">What time do you like to start the day? (hotel pickup time, when possible)<span class="required">*</span></label>
+          <select id="start-time" name="preferred_start_time" required>
+            <option value="">Pick a time</option>
+            <option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option>
+            <option value="flexible">Flexible, whatever the day needs</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label>Accommodation preference?<span class="required">*</span></label>
           <div class="radio-group">
             <label><input type="radio" name="accommodation" value="hotel" required> Hotels/Resorts (comfort &amp; amenities)</label>
@@ -854,16 +878,6 @@
             <label><input type="radio" name="accommodation" value="hostel"> Hostels (social &amp; budget-friendly)</label>
             <label><input type="radio" name="accommodation" value="rental"> Airbnb/Vacation rentals (home away from home)</label>
             <label><input type="radio" name="accommodation" value="flexible"> I'm flexible - just recommend what fits</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Food philosophy on vacation?<span class="required">*</span></label>
-          <div class="radio-group">
-            <label><input type="radio" name="food_style" value="street_local" required> Street food &amp; local spots (authentic &amp; cheap)</label>
-            <label><input type="radio" name="food_style" value="mix"> Mix of local + nice restaurants</label>
-            <label><input type="radio" name="food_style" value="fine_dining"> Fine dining experiences</label>
-            <label><input type="radio" name="food_style" value="not_picky"> I just need food - not picky</label>
           </div>
         </div>
 
@@ -879,12 +893,12 @@
         <p class="section-subtitle">Your experience level and what worked or did not work in the past.</p>
 
         <div class="form-group">
-          <label>How experienced are you with international travel?<span class="required">*</span></label>
+          <label>How much experience do you have in this trip's region? (e.g. Southeast Asia, South America)<span class="required">*</span></label>
           <div class="radio-group">
-            <label><input type="radio" name="travel_experience" value="first_time" required> First-time traveler (this is new to me)</label>
-            <label><input type="radio" name="travel_experience" value="some"> Some experience (been to a few countries)</label>
-            <label><input type="radio" name="travel_experience" value="experienced"> Experienced traveler (I've traveled a lot)</label>
-            <label><input type="radio" name="travel_experience" value="nomad"> Digital nomad/Frequent traveler</label>
+            <label><input type="radio" name="travel_experience" value="first_time" required> First time in this region</label>
+            <label><input type="radio" name="travel_experience" value="some"> Been once or twice to nearby countries</label>
+            <label><input type="radio" name="travel_experience" value="experienced"> Know the region well, been several times</label>
+            <label><input type="radio" name="travel_experience" value="nomad"> Travel this region a lot, almost like home</label>
           </div>
         </div>
 
@@ -945,15 +959,6 @@
           <textarea id="special-needs-details" name="special_needs_details"></textarea>
         </div>
 
-        <div class="form-group">
-          <label>Do you have travel insurance?</label>
-          <div class="radio-group">
-            <label><input type="radio" name="travel_insurance" value="yes"> Yes, already covered</label>
-            <label><input type="radio" name="travel_insurance" value="plan_to_buy"> No, but planning to buy</label>
-            <label><input type="radio" name="travel_insurance" value="no_not_planning"> No, and not planning to</label>
-            <label><input type="radio" name="travel_insurance" value="what_is_it"> What's travel insurance? Tell me more.</label>
-          </div>
-        </div>
       </section>
 
       <!-- PART 7: YOUR VISION & CONCERNS -->
@@ -1016,8 +1021,8 @@
 
       <!-- PART 8: FOR ITINERARY REVIEW ONLY (CONDITIONAL) -->
       <section class="form-section" id="itinerary-review-section" style="display:none;">
-        <h2>Part 8: For Itinerary Review</h2>
-        <p class="section-subtitle">Only relevant if you already have a planned itinerary and chose Itinerary Review &amp; Polish.</p>
+        <h2>Part 8: The itinerary you already have</h2>
+        <p class="section-subtitle">Relevant if you chose booking or review of an existing itinerary. Upload a file or paste it below.</p>
 
         <div class="form-group">
           <label for="itinerary-file">Upload a file with your itinerary</label>
@@ -1030,7 +1035,7 @@
           <textarea id="planned-itinerary" name="planned_itinerary" placeholder="Paste your itinerary here, or share a link to a document (Google Docs, Dropbox, etc.)."></textarea>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="review-focus-group">
           <label>What specifically do you want me to review?<span class="required">*</span></label>
           <p class="helper-text">Select all that apply.</p>
           <div class="checkbox-group">
@@ -1070,7 +1075,7 @@
         <h3>What happens after you send this?</h3>
         <p>✅ You'll receive an automatic email confirming I got your details.</p>
         <p>📖 I read your answers carefully, not like a chatbot.</p>
-        <p>💰 Within 48 hours, I'll send you an email with the final price and next steps.</p>
+        <p>💰 Within a week you get an initial itinerary, the hotels I picked for you and a final price, after I check with the suppliers.</p>
         <p style="margin-top:10px;">
           Questions already? Email me at
           <a class="email-link" href="mailto:hey@mydailyjourneys.com">hey@mydailyjourneys.com</a>
@@ -1103,8 +1108,10 @@
       // Service type visibility toggle
       function updateServiceVisibility() {
         const selected = document.querySelector('input[name="service_type"]:checked');
-        if (selected && selected.value === 'itinerary_review') {
+        if (selected && (selected.value === 'itinerary_review' || selected.value === 'execute_existing')) {
           itinerarySection.style.display = 'block';
+          const rf = document.getElementById('review-focus-group');
+          if (rf) rf.style.display = selected.value === 'itinerary_review' ? 'block' : 'none';
         } else {
           itinerarySection.style.display = 'none';
         }
@@ -1434,7 +1441,7 @@
 
           if (success) {
             // Show success message
-            formMessage.textContent = '🎉 Thank you! Your details have been received successfully. I\'ll review your information and get back to you within 48 hours with the final price and next steps.';
+            formMessage.textContent = '🎉 Thank you! Your details have been received successfully. I\'ll review your information and get back to you within a week with an initial itinerary and a final price.';
             formMessage.className = 'form-message success';
             formMessage.style.display = 'block';
             

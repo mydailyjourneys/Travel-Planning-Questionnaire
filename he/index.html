@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>טופס אפיון טיול - My Daily Journeys</title>
+  <title>בואו נתכנן לכם טיול - My Daily Journeys</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="טופס אפיון לטיול אישי עבור ייעוץ ותכנון טיול עם My Daily Journeys.">
 
@@ -460,6 +460,9 @@
         flex-direction: column;
         gap: 10px;
       }
+      .form-row .half, .form-row .third {
+        flex: 1 1 auto;
+      }
       input[type="text"],
       input[type="email"],
       input[type="tel"],
@@ -504,9 +507,9 @@
 <body>
   <div class="container">
     <header class="hero">
-      <h1>טופס אפיון טיול</h1>
+      <h1>בואו נתכנן לכם טיול</h1>
       <p class="subheadline">
-        הטופס הזה יעזור לנו להבין מי אתם, לאן אתם חולמים להגיע ומה אתם צריכים מהליווי האישי.
+        כמה דקות של תשובות, ואני כבר יודעת מי אתם, לאן אתם רוצים להגיע ומה חשוב לכם בדרך. בלי תשלום בשלב הזה.
       </p>
       <p class="small-note">שדות שמסומנים ב<span class="required">*</span> הם שדות חובה.</p>
     </header>
@@ -561,12 +564,16 @@
           <label>איזה שירות מעניין אתכם?<span class="required">*</span></label>
           <div class="radio-group">
             <label>
-              <input type="radio" name="service_type" value="itinerary_review" required>
-              ליווי ובדיקת מסלול קיים (כבר בנינו מסלול ורוצים ליטוש)
+              <input type="radio" name="service_type" value="full_custom" required>
+              תכנון טיול מלא מההתחלה, כולל ביצוע ההזמנות וליווי לאורך הטיול
             </label>
             <label>
-              <input type="radio" name="service_type" value="full_custom">
-              תכנון טיול מלא מההתחלה
+              <input type="radio" name="service_type" value="execute_existing">
+              כבר יש לנו מסלול: ביצוע ההזמנות מול ספקים מקומיים אמינים, עם הליווי של מאיה
+            </label>
+            <label>
+              <input type="radio" name="service_type" value="itinerary_review">
+              ליווי ובדיקת מסלול קיים (כבר בנינו מסלול ורוצים ליטוש)
             </label>
             <label>
               <input type="radio" name="service_type" value="not_sure">
@@ -847,8 +854,26 @@
           <div class="radio-group">
             <label><input type="radio" name="daily_pace" value="slow" required> קצב איטי (1-2 דברים ביום והרבה זמן לעצמכם)</label>
             <label><input type="radio" name="daily_pace" value="medium"> קצב בינוני (2-3 דברים ביום, איזון טוב)</label>
-            <label><input type="radio" name="daily_pace" value="fast"> קצב מהיר (לדחוף הכל פנימה, נ休 על הספה בבית)</label>
+            <label><input type="radio" name="daily_pace" value="fast"> קצב מהיר (לדחוף הכל פנימה, ננוח על הספה בבית)</label>
           </div>
+        </div>
+
+        <div class="form-group">
+          <label>איך אתם עם נסיעות ארוכות ברכב?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="long_drives" value="fine" required> בסדר גמור, גם 5-6 שעות עם עצירות</label>
+            <label><input type="radio" name="long_drives" value="up_to_3"> עד 3 שעות ביום, לא יותר</label>
+            <label><input type="radio" name="long_drives" value="prefer_flights"> כמה שפחות. עדיף טיסות פנים גם אם זה עולה יותר</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="start-time">באיזו שעה נוח לכם להתחיל את היום? (שעת איסוף מהמלון, כשאפשר)<span class="required">*</span></label>
+          <select id="start-time" name="preferred_start_time" required>
+            <option value="">בחרו שעה</option>
+            <option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option>
+            <option value="flexible">גמישים, מה שהטיול דורש</option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -859,16 +884,6 @@
             <label><input type="radio" name="accommodation" value="hostel"> הוסטלים (אווירה חברתית ותקציב נמוך)</label>
             <label><input type="radio" name="accommodation" value="rental"> Airbnb/דירות נופש (בית קטן רחוק מהבית)</label>
             <label><input type="radio" name="accommodation" value="flexible"> אנחנו גמישים - תמליצי על מה שמתאים לטיול</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>מה הפילוסופיה שלכם לגבי אוכל בטיול?<span class="required">*</span></label>
-          <div class="radio-group">
-            <label><input type="radio" name="food_style" value="street_local" required> אוכל רחוב ומקומות מקומיים (אותנטי וזול)</label>
-            <label><input type="radio" name="food_style" value="mix"> שילוב של מקומי + מסעדות טובות</label>
-            <label><input type="radio" name="food_style" value="fine_dining"> מסעדות שף וחוויות קולינריות מיוחדות</label>
-            <label><input type="radio" name="food_style" value="not_picky"> לא בררנים, רק שיהיה מה לאכול</label>
           </div>
         </div>
 
@@ -884,12 +899,12 @@
         <p class="section-subtitle">קצת הקשר על הניסיון שלכם והציפיות מהטיול.</p>
 
         <div class="form-group">
-          <label>כמה ניסיון יש לכם בטיולים לחו"ל?<span class="required">*</span></label>
+          <label>כמה ניסיון יש לכם באזור של הטיול הזה? (למשל דרום מזרח אסיה, דרום אמריקה)<span class="required">*</span></label>
           <div class="radio-group">
-            <label><input type="radio" name="travel_experience" value="first_time" required> טיול ראשון לחו"ל או כמעט ראשון</label>
-            <label><input type="radio" name="travel_experience" value="some"> קצת ניסיון (היינו בכמה מדינות)</label>
-            <label><input type="radio" name="travel_experience" value="experienced"> מנוסים (נסענו לא מעט לאורך השנים)</label>
-            <label><input type="radio" name="travel_experience" value="nomad"> נוודים דיגיטליים/מטיילים בתדירות גבוהה</label>
+            <label><input type="radio" name="travel_experience" value="first_time" required> פעם ראשונה באזור הזה</label>
+            <label><input type="radio" name="travel_experience" value="some"> היינו פעם או פעמיים במדינות קרובות</label>
+            <label><input type="radio" name="travel_experience" value="experienced"> מכירים את האזור טוב, היינו כמה פעמים</label>
+            <label><input type="radio" name="travel_experience" value="nomad"> מטיילים באזור הזה הרבה, כמעט כמו בבית</label>
           </div>
         </div>
 
@@ -950,15 +965,6 @@
           <textarea id="special-needs-details" name="special_needs_details"></textarea>
         </div>
 
-        <div class="form-group">
-          <label>האם יש לכם ביטוח נסיעות?</label>
-          <div class="radio-group">
-            <label><input type="radio" name="travel_insurance" value="yes"> כן, כבר סגור</label>
-            <label><input type="radio" name="travel_insurance" value="plan_to_buy"> עדיין לא, אבל מתכננים לרכוש</label>
-            <label><input type="radio" name="travel_insurance" value="no_not_planning"> לא, ולא מתכננים לקחת</label>
-            <label><input type="radio" name="travel_insurance" value="what_is_it"> מה זה ביטוח נסיעות בכלל?</label>
-          </div>
-        </div>
       </section>
 
       <!-- חלק 7: החזון והחששות -->
@@ -1021,8 +1027,8 @@
 
       <!-- חלק 8: ליווי מסלול קיים בלבד -->
       <section class="form-section" id="itinerary-review-section" style="display:none;">
-        <h2>חלק 8: למסלול קיים בלבד</h2>
-        <p class="section-subtitle">רלוונטי רק אם כבר בניתם מסלול וסימנתם ליווי ובדיקת מסלול.</p>
+        <h2>חלק 8: המסלול שכבר בניתם</h2>
+        <p class="section-subtitle">רלוונטי אם סימנתם ביצוע או בדיקה של מסלול קיים. העלו קובץ או הדביקו את המסלול.</p>
 
         <div class="form-group">
           <label for="itinerary-file">העלו קובץ עם המסלול שלכם</label>
@@ -1035,7 +1041,7 @@
           <textarea id="planned-itinerary" name="planned_itinerary" placeholder="הדביקו כאן את המסלול שלכם או שתפו קישור למסמך (Google Docs, Dropbox, וכו')."></textarea>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="review-focus-group">
           <label>על מה תרצו שנתמקד בבדיקה?<span class="required">*</span></label>
           <p class="helper-text">בחרו כל מה שרלוונטי.</p>
           <div class="checkbox-group">
@@ -1075,7 +1081,7 @@
         <h3>מה קורה אחרי השליחה?</h3>
         <p>✅ תקבלו אימייל אוטומטי שמאשר שקיבלתי את הפרטים.</p>
         <p>📖 אני קוראת את התשובות שלכם בעיון, לא כמו צ'אט בוט.</p>
-        <p>💰 תוך 48 שעות אשלח לכם אימייל עם המחיר הסופי והצעדים הבאים.</p>
+        <p>💰 תוך שבוע תקבלו מסלול ראשוני, המלונות שבחרתי לכם ומחיר סופי, אחרי שאני בודקת מול הספקים.</p>
         <p style="margin-top:10px;">
           שאלות כבר עכשיו? אפשר לכתוב ל
           <a class="email-link" href="mailto:hey@mydailyjourneys.com">hey@mydailyjourneys.com</a>
@@ -1109,8 +1115,10 @@
       // Service type visibility toggle
       function updateServiceVisibility() {
         const selected = document.querySelector('input[name="service_type"]:checked');
-        if (selected && selected.value === 'itinerary_review') {
+        if (selected && (selected.value === 'itinerary_review' || selected.value === 'execute_existing')) {
           itinerarySection.style.display = 'block';
+          const rf = document.getElementById('review-focus-group');
+          if (rf) rf.style.display = selected.value === 'itinerary_review' ? 'block' : 'none';
         } else {
           itinerarySection.style.display = 'none';
         }
@@ -1440,7 +1448,7 @@
 
           if (success) {
             // Show success message
-            formMessage.textContent = '🎉 תודה רבה! הפרטים שלך התקבלו בהצלחה. אעבור על המידע ואחזור אליך תוך 48 שעות עם מחיר סופי והשלבים הבאים.';
+            formMessage.textContent = '🎉 תודה רבה! הפרטים שלך התקבלו בהצלחה. אעבור על המידע ואחזור אליך תוך שבוע עם מסלול ראשוני ומחיר סופי.';
             formMessage.className = 'form-message success';
             formMessage.style.display = 'block';
             
