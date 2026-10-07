@@ -514,6 +514,7 @@
 
     <form id="intake-form" class="intake-form" method="post" action="#">
       <input type="hidden" name="language" value="en">
+      <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
 
       <div id="form-error-summary" class="alert error">
         Some required fields are missing or need your attention. Scroll up and complete the highlighted questions.
@@ -1073,7 +1074,7 @@
 
       <div class="next-steps-box">
         <h3>What happens after you send this?</h3>
-        <p>✅ You'll receive an automatic email confirming I got your details.</p>
+        <p>✅ Your details land straight with me, and you'll see a confirmation right here.</p>
         <p>📖 I read your answers carefully, not like a chatbot.</p>
         <p>💰 Within a week you get an initial itinerary, the hotels I picked for you and a final price, after I check with the suppliers.</p>
         <p style="margin-top:10px;">
@@ -1090,7 +1091,9 @@
 
   <script>
     // Make Webhook Configuration - handles all form data including file uploads
-    const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/8ds4ng7crn42sxjno1q10adm1s2d8y7k';
+    // Lead endpoint (Travel-App on Vercel). Validates and opens ONE ClickUp lead. Make is no longer used.
+    const LEAD_API_URL = 'https://planning.mydailyjourneys.com/api/questionnaire';
+    const FORM_OPENED_AT = Date.now();
     
     // Google Apps Script URL for direct Drive upload (no file size limit!)
     // IMPORTANT: Replace this with your Apps Script deployment URL
@@ -1313,9 +1316,18 @@
               }
             }
           }
+          // Human-readable answers next to the codes (radio / checkbox / select)
+          form.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(function (inp) {
+            const lab = inp.closest('label');
+            const txt = lab ? lab.textContent.replace(/\s+/g, ' ').trim() : '';
+            if (!txt) return;
+            const k = inp.name.replace(/\[\]$/, '');
+            data[k + '_label'] = inp.type === 'checkbox' ? ((data[k + '_label'] ? data[k + '_label'] + ' | ' : '') + txt) : txt;
+          });
+          data.elapsedMs = Date.now() - FORM_OPENED_AT;
 
           // Send as JSON
-          const response = await fetch(MAKE_WEBHOOK_URL, {
+          const response = await fetch(LEAD_API_URL, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -1326,7 +1338,7 @@
           
           return response.ok || response.status === 200 || response.status === 201;
         } catch (error) {
-          console.error('Make webhook error:', error);
+          console.error('Lead API error:', error);
           return false;
         }
       }
