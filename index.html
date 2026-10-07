@@ -507,7 +507,7 @@
     <header class="hero">
       <h1>Let's Plan Your Trip</h1>
       <p class="subheadline">
-        A few minutes of answers and I know who you are, where you want to go and what matters to you on the way. No payment at this stage.
+        Tell me about yourselves and the trip you want. I read every answer and come back with an initial itinerary and a price.
       </p>
       <p class="small-note">Fields marked with <span class="required">*</span> are required.</p>
     </header>
@@ -858,7 +858,6 @@
           <div class="radio-group">
             <label><input type="radio" name="long_drives" value="fine" required> Totally fine, even 5-6 hours with stops</label>
             <label><input type="radio" name="long_drives" value="up_to_3"> Up to 3 hours a day, no more</label>
-            <label><input type="radio" name="long_drives" value="prefer_flights"> As little as possible. Domestic flights, even if they cost more</label>
           </div>
         </div>
 
@@ -899,22 +898,10 @@
             <label><input type="radio" name="travel_experience" value="first_time" required> First time in this region</label>
             <label><input type="radio" name="travel_experience" value="some"> Been once or twice to nearby countries</label>
             <label><input type="radio" name="travel_experience" value="experienced"> Know the region well, been several times</label>
-            <label><input type="radio" name="travel_experience" value="nomad"> Travel this region a lot, almost like home</label>
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Have you been to this destination before?<span class="required">*</span></label>
-          <div class="radio-group">
-            <label><input type="radio" name="been_destination" value="yes" required> Yes</label>
-            <label><input type="radio" name="been_destination" value="no"> No, first time</label>
-          </div>
-        </div>
 
-        <div class="form-group" id="been-destination-details-group" style="display:none;">
-          <label for="been-destination-details">When? What did you love or hate?</label>
-          <textarea id="been-destination-details" name="been_destination_details" placeholder="What stood out, good or bad?"></textarea>
-        </div>
 
         <div class="form-group">
           <label for="favorite-trip">Tell me about your favorite trip ever</label>
@@ -1075,8 +1062,8 @@
       <div class="next-steps-box">
         <h3>What happens after you send this?</h3>
         <p>✅ Your details land straight with me, and you'll see a confirmation right here.</p>
-        <p>📖 I read your answers carefully, not like a chatbot.</p>
-        <p>💰 Within a week you get an initial itinerary, the hotels I picked for you and a final price, after I check with the suppliers.</p>
+        <p>📖 I read your answers carefully.</p>
+        <p>💰 Within a week you get an initial itinerary, recommended hotels and a final price, after I check with the suppliers.</p>
         <p style="margin-top:10px;">
           Questions already? Email me at
           <a class="email-link" href="mailto:hey@mydailyjourneys.com">hey@mydailyjourneys.com</a>
@@ -1168,26 +1155,6 @@
         radio.addEventListener('change', updateOccasionVisibility);
       });
       updateOccasionVisibility();
-
-      // Been to destination visibility
-      const beenRadios = document.querySelectorAll('input[name="been_destination"]');
-      const beenGroup = document.getElementById('been-destination-details-group');
-      const beenInput = document.getElementById('been-destination-details');
-
-      function updateBeenVisibility() {
-        const selected = document.querySelector('input[name="been_destination"]:checked');
-        if (selected && selected.value === 'yes') {
-          beenGroup.style.display = 'block';
-        } else {
-          beenGroup.style.display = 'none';
-          if (beenInput) beenInput.value = '';
-        }
-      }
-
-      beenRadios.forEach(function (radio) {
-        radio.addEventListener('change', updateBeenVisibility);
-      });
-      updateBeenVisibility();
 
       // Special needs visibility
       const needsNone = document.getElementById('needs-none');

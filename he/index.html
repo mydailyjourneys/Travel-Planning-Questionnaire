@@ -509,7 +509,7 @@
     <header class="hero">
       <h1>בואו נתכנן לכם טיול</h1>
       <p class="subheadline">
-        כמה דקות של תשובות, ואני כבר יודעת מי אתם, לאן אתם רוצים להגיע ומה חשוב לכם בדרך. בלי תשלום בשלב הזה.
+        ספרו לי על עצמכם ועל הטיול שאתם רוצים. אני קוראת כל תשובה, וחוזרת אליכם עם מסלול ראשוני ומחיר.
       </p>
       <p class="small-note">שדות שמסומנים ב<span class="required">*</span> הם שדות חובה.</p>
     </header>
@@ -864,7 +864,6 @@
           <div class="radio-group">
             <label><input type="radio" name="long_drives" value="fine" required> בסדר גמור, גם 5-6 שעות עם עצירות</label>
             <label><input type="radio" name="long_drives" value="up_to_3"> עד 3 שעות ביום, לא יותר</label>
-            <label><input type="radio" name="long_drives" value="prefer_flights"> כמה שפחות. עדיף טיסות פנים גם אם זה עולה יותר</label>
           </div>
         </div>
 
@@ -905,22 +904,10 @@
             <label><input type="radio" name="travel_experience" value="first_time" required> פעם ראשונה באזור הזה</label>
             <label><input type="radio" name="travel_experience" value="some"> היינו פעם או פעמיים במדינות קרובות</label>
             <label><input type="radio" name="travel_experience" value="experienced"> מכירים את האזור טוב, היינו כמה פעמים</label>
-            <label><input type="radio" name="travel_experience" value="nomad"> מטיילים באזור הזה הרבה, כמעט כמו בבית</label>
           </div>
         </div>
 
-        <div class="form-group">
-          <label>האם כבר הייתם ביעד הזה?<span class="required">*</span></label>
-          <div class="radio-group">
-            <label><input type="radio" name="been_destination" value="yes" required> כן</label>
-            <label><input type="radio" name="been_destination" value="no"> לא, פעם ראשונה</label>
-          </div>
-        </div>
 
-        <div class="form-group" id="been-destination-details-group" style="display:none;">
-          <label for="been-destination-details">מתי הייתם שם? מה אהבתם ומה פחות?</label>
-          <textarea id="been-destination-details" name="been_destination_details" placeholder="מה עבד טוב, מה פחות, מה הייתם משנים הפעם."></textarea>
-        </div>
 
         <div class="form-group">
           <label for="favorite-trip">ספרו לי על טיול או חופשה שהיו בשבילכם מושלמים במיוחד</label>
@@ -1081,8 +1068,8 @@
       <div class="next-steps-box">
         <h3>מה קורה אחרי השליחה?</h3>
         <p>✅ הפרטים מגיעים ישר אליי, ותראו אישור כאן על המסך.</p>
-        <p>📖 אני קוראת את התשובות שלכם בעיון, לא כמו צ'אט בוט.</p>
-        <p>💰 תוך שבוע תקבלו מסלול ראשוני, המלונות שבחרתי לכם ומחיר סופי, אחרי שאני בודקת מול הספקים.</p>
+        <p>📖 אני קוראת את התשובות שלכם בעיון.</p>
+        <p>💰 תוך שבוע תקבלו מסלול ראשוני, מלונות מומלצים ומחיר סופי, אחרי שאני בודקת מול הספקים.</p>
         <p style="margin-top:10px;">
           שאלות כבר עכשיו? אפשר לכתוב ל
           <a class="email-link" href="mailto:hey@mydailyjourneys.com">hey@mydailyjourneys.com</a>
@@ -1175,26 +1162,6 @@
         radio.addEventListener('change', updateOccasionVisibility);
       });
       updateOccasionVisibility();
-
-      // Been to destination visibility
-      const beenRadios = document.querySelectorAll('input[name="been_destination"]');
-      const beenGroup = document.getElementById('been-destination-details-group');
-      const beenInput = document.getElementById('been-destination-details');
-
-      function updateBeenVisibility() {
-        const selected = document.querySelector('input[name="been_destination"]:checked');
-        if (selected && selected.value === 'yes') {
-          beenGroup.style.display = 'block';
-        } else {
-          beenGroup.style.display = 'none';
-          if (beenInput) beenInput.value = '';
-        }
-      }
-
-      beenRadios.forEach(function (radio) {
-        radio.addEventListener('change', updateBeenVisibility);
-      });
-      updateBeenVisibility();
 
       // Special needs visibility
       const needsNone = document.getElementById('needs-none');
