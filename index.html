@@ -677,8 +677,8 @@
 
       <!-- PART 3: BUDGET & PRIORITIES -->
       <section class="form-section" id="part-3">
-        <h2>Part 3: Budget &amp; Priorities</h2>
-        <p class="section-subtitle">How much you plan to spend and what matters most to you.</p>
+        <h2>Part 3: Budget</h2>
+        <p class="section-subtitle">How much you plan to spend.</p>
 
         <div class="form-group">
           <label>Estimated total budget per person (including flights, accommodation, food, activities)<span class="required">*</span></label>
@@ -692,147 +692,6 @@
           </div>
         </div>
 
-        <div class="form-group">
-        <label>How do you prioritize your travel budget?<span class="required">*</span></label>
-        <p class="helper-text">
-            Choose one number in each row: 5 = most important, 1 = least important.
-        </p>
-
-        <!-- Accommodation -->
-        <div class="priority-row">
-            <div class="priority-label">Accommodation quality<span class="required">*</span></div>
-            <div class="priority-options">
-            <label class="priority-choice">
-                <input type="radio" name="rank_accommodation" value="1" required>
-                <span>1</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_accommodation" value="2">
-                <span>2</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_accommodation" value="3">
-                <span>3</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_accommodation" value="4">
-                <span>4</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_accommodation" value="5">
-                <span>5</span>
-            </label>
-            </div>
-        </div>
-
-        <!-- Food -->
-        <div class="priority-row">
-            <div class="priority-label">Food &amp; dining experiences<span class="required">*</span></div>
-            <div class="priority-options">
-            <label class="priority-choice">
-                <input type="radio" name="rank_food" value="1" required>
-                <span>1</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_food" value="2">
-                <span>2</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_food" value="3">
-                <span>3</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_food" value="4">
-                <span>4</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_food" value="5">
-                <span>5</span>
-            </label>
-            </div>
-        </div>
-
-        <!-- Activities -->
-        <div class="priority-row">
-            <div class="priority-label">Activities &amp; tours<span class="required">*</span></div>
-            <div class="priority-options">
-            <label class="priority-choice">
-                <input type="radio" name="rank_activities" value="1" required>
-                <span>1</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_activities" value="2">
-                <span>2</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_activities" value="3">
-                <span>3</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_activities" value="4">
-                <span>4</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_activities" value="5">
-                <span>5</span>
-            </label>
-            </div>
-        </div>
-
-        <!-- Flights -->
-        <div class="priority-row">
-            <div class="priority-label">Flights &amp; transportation<span class="required">*</span></div>
-            <div class="priority-options">
-            <label class="priority-choice">
-                <input type="radio" name="rank_flights" value="1" required>
-                <span>1</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_flights" value="2">
-                <span>2</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_flights" value="3">
-                <span>3</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_flights" value="4">
-                <span>4</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_flights" value="5">
-                <span>5</span>
-            </label>
-            </div>
-        </div>
-
-        <!-- Flexibility -->
-        <div class="priority-row">
-            <div class="priority-label">Flexibility &amp; spontaneity<span class="required">*</span></div>
-            <div class="priority-options">
-            <label class="priority-choice">
-                <input type="radio" name="rank_flexibility" value="1" required>
-                <span>1</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_flexibility" value="2">
-                <span>2</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_flexibility" value="3">
-                <span>3</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_flexibility" value="4">
-                <span>4</span>
-            </label>
-            <label class="priority-choice">
-                <input type="radio" name="rank_flexibility" value="5">
-                <span>5</span>
-            </label>
-            </div>
-        </div>
-        </div>
 
       <!-- PART 4: TRAVEL STYLE -->
       <section class="form-section" id="part-4">
@@ -1355,30 +1214,6 @@
         } else {
           const itineraryError = document.getElementById('itinerary-review-error');
           if (itineraryError) itineraryError.style.display = 'none';
-        }
-
-        // Validate ranking fields (budget priorities)
-        const rankingFields = ['rank_accommodation', 'rank_food', 'rank_activities', 'rank_flights', 'rank_flexibility'];
-        for (const field of rankingFields) {
-          const inputs = document.querySelectorAll(`input[name="${field}"]`);
-          const checked = Array.from(inputs).some(input => input.checked);
-          if (!checked) {
-            valid = false;
-            // Highlight the entire ranking section
-            const priorityItem = inputs[0].closest('.priority-item');
-            if (priorityItem) {
-              priorityItem.style.border = '2px solid #d9534f';
-              priorityItem.style.backgroundColor = '#fff5f5';
-              if (!firstError) firstError = inputs[0];
-            }
-          } else {
-            // Remove highlight if valid
-            const priorityItem = inputs[0].closest('.priority-item');
-            if (priorityItem) {
-              priorityItem.style.border = '';
-              priorityItem.style.backgroundColor = '';
-            }
-          }
         }
 
         // Check HTML5 required fields
