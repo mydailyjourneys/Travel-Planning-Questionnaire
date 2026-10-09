@@ -656,6 +656,31 @@
         </div>
 
         <div class="form-group">
+          <label for="adults-ages">Adults' ages</label>
+          <input type="text" id="adults-ages" name="adults_ages" placeholder="Example: 45, 47 and 70">
+        </div>
+
+        <div class="form-group">
+          <label for="rooms-setup">How would you like to split the rooms?<span class="required">*</span></label>
+          <input type="text" id="rooms-setup" name="rooms_setup" required placeholder='Example: "One double room for us and one room for the 3 kids", "A room for each of us"'>
+        </div>
+
+        <div class="form-group">
+          <label>International flights</label>
+          <div class="radio-group">
+            <label><input type="radio" name="flights_status" value="booked"> Already booked</label>
+            <label><input type="radio" name="flights_status" value="not_yet" checked> Not booked yet</label>
+          </div>
+          <label for="arrival-details" style="font-weight:400; font-size:0.9em; margin-top:10px;">Arrival: which airport, date and time?</label>
+          <input type="text" id="arrival-details" name="arrival_details" placeholder="Example: Hanoi, Jan 9, 18:00">
+          <label for="departure-details" style="font-weight:400; font-size:0.9em; margin-top:10px;">Departure home: which airport, date and time?</label>
+          <input type="text" id="departure-details" name="departure_details" placeholder="Example: Saigon, Jan 21, 06:00">
+          <label for="flight-tickets" style="font-weight:400; font-size:0.9em; margin-top:10px;">Already have tickets? You can upload them here</label>
+          <input type="file" id="flight-tickets" name="flight_tickets" multiple accept=".pdf,.jpg,.jpeg,.png,.heic,.webp">
+          <p class="helper-text">You can choose several files.</p>
+        </div>
+
+        <div class="form-group">
           <label>Is this trip for a special occasion?</label>
           <div class="radio-group">
             <label>
@@ -681,17 +706,17 @@
         <p class="section-subtitle">How much you plan to spend.</p>
 
         <div class="form-group">
-          <label>Estimated total budget per person (including flights, accommodation, food, activities)<span class="required">*</span></label>
+          <label>Budget per person per day, on the ground only: hotels, driver, guides, activities and domestic flights. Not including international flights.<span class="required">*</span></label>
           <div class="radio-group">
-            <label><input type="radio" name="budget" value="under_1000" required> Under $1,000 per person</label>
-            <label><input type="radio" name="budget" value="1000_2500"> $1,000-2,500 per person</label>
-            <label><input type="radio" name="budget" value="2500_5000"> $2,500-5,000 per person</label>
-            <label><input type="radio" name="budget" value="5000_10000"> $5,000-10,000 per person</label>
-            <label><input type="radio" name="budget" value="10000_plus"> $10,000+ per person</label>
-            <label><input type="radio" name="budget" value="no_idea"> I honestly have no idea</label>
+            <label><input type="radio" name="budget" value="upto_150" required> Up to $150 per person per day</label>
+            <label><input type="radio" name="budget" value="150_250"> $150-250 per person per day</label>
+            <label><input type="radio" name="budget" value="250_400"> $250-400 per person per day</label>
+            <label><input type="radio" name="budget" value="400_plus"> $400+ per person per day</label>
+            <label><input type="radio" name="budget" value="no_idea"> No idea yet</label>
           </div>
         </div>
 
+      </section>
 
       <!-- PART 4: TRAVEL STYLE -->
       <section class="form-section" id="part-4">
@@ -741,19 +766,33 @@
         </div>
 
         <div class="form-group">
-          <label>Accommodation preference?<span class="required">*</span></label>
+          <label>What hotel level fits you?<span class="required">*</span></label>
           <div class="radio-group">
-            <label><input type="radio" name="accommodation" value="hotel" required> Hotels/Resorts (comfort &amp; amenities)</label>
-            <label><input type="radio" name="accommodation" value="boutique"> Boutique hotels (unique &amp; charming)</label>
-            <label><input type="radio" name="accommodation" value="hostel"> Hostels (social &amp; budget-friendly)</label>
-            <label><input type="radio" name="accommodation" value="rental"> Airbnb/Vacation rentals (home away from home)</label>
-            <label><input type="radio" name="accommodation" value="flexible"> I'm flexible - just recommend what fits</label>
+            <label><input type="radio" name="accommodation" value="4star" required> 4-star, comfortable and central</label>
+            <label><input type="radio" name="accommodation" value="5star"> 5-star, the full treat</label>
+            <label><input type="radio" name="accommodation" value="boutique"> Small boutique with character</label>
+            <label><input type="radio" name="accommodation" value="flexible"> A mix, recommend what fits</label>
           </div>
+        </div>
+
+        <div class="form-group">
+          <label for="room-notes">Anything important about the room?</label>
+          <input type="text" id="room-notes" name="room_notes" placeholder='Example: "Large room", "Balcony", "Pool at the hotel"'>
         </div>
 
         <div class="form-group">
           <label for="dietary">Any dietary restrictions or food allergies?</label>
           <textarea id="dietary" name="dietary" placeholder="Vegan, gluten free, allergies, religious restrictions, etc. You can also share any additional food preferences here."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Kosher & Shabbat</label>
+          <div class="radio-group">
+            <label><input type="radio" name="kosher_shabbat" value="no" checked> Not relevant</label>
+            <label><input type="radio" name="kosher_shabbat" value="kosher"> We keep kosher</label>
+            <label><input type="radio" name="kosher_shabbat" value="chabad"> Friday and Saturday near a Chabad house</label>
+            <label><input type="radio" name="kosher_shabbat" value="shabbat"> We keep Shabbat and kosher</label>
+          </div>
         </div>
       </section>
 
@@ -817,6 +856,16 @@
           <textarea id="special-needs-details" name="special_needs_details"></textarea>
         </div>
 
+        <div class="form-group">
+          <label>How much physical activity suits you?<span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="fitness_level" value="active" required> Anything goes: hours of walking, cycling, stairs and caves</label>
+            <label><input type="radio" name="fitness_level" value="medium"> Medium: short walks, no long climbs</label>
+            <label><input type="radio" name="fitness_level" value="easy"> Easy: flat walking only, no stairs and no caves</label>
+            <label><input type="radio" name="fitness_level" value="mixed"> Mixed group, some need it easier</label>
+          </div>
+        </div>
+
       </section>
 
       <!-- PART 7: YOUR VISION & CONCERNS -->
@@ -849,6 +898,11 @@
             <label for="trip-worries-other" style="font-weight:400;">If other, please share</label>
             <input type="text" id="trip-worries-other" name="trip_worries_other">
           </div>
+        </div>
+
+        <div class="form-group">
+          <label for="must-see">Any places you have heard of and must see?</label>
+          <textarea id="must-see" name="must_see" placeholder='Example: "Halong Bay", "A floating market", "Sunset on the beach"'></textarea>
         </div>
 
         <div class="form-group">
@@ -1135,8 +1189,9 @@
               
               if (driveResult) {
                 // Store Drive link instead of file data
-                data['itinerary_file_link'] = driveResult.fileUrl;
-                data['itinerary_file_name'] = driveResult.fileName;
+                const lk = key + '_link', nk = key + '_name';
+                data[lk] = data[lk] ? data[lk] + ' | ' + driveResult.fileUrl : driveResult.fileUrl;
+                data[nk] = data[nk] ? data[nk] + ' | ' + driveResult.fileName : driveResult.fileName;
               } else {
                 // If Drive upload fails, notify user
                 throw new Error('File upload failed. Please try again or share a link instead.');
